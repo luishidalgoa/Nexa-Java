@@ -1,10 +1,10 @@
 package com.luishidalgoa.Nexa.Controller;
 
 import com.luishidalgoa.Nexa.Execute;
+import com.luishidalgoa.Nexa.Interfaces.iControllers.iPublicationController;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.LikeDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.ShareDAO;
-import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
 import com.luishidalgoa.Nexa.Model.DTO.PublicationDTO;
 import com.luishidalgoa.Nexa.Model.DTO.Translated;
@@ -20,9 +20,11 @@ import javafx.scene.control.TextArea;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
-public class PublicationController implements Initializable {
+public class PublicationController implements Initializable, iPublicationController {
 
     @FXML
     private Label Label_Date;
@@ -38,35 +40,46 @@ public class PublicationController implements Initializable {
     MenuButton Menu_options;
     private PublicationDTO p=new PublicationDTO();
     private UserDTO user;
+    private final static java.util.logging.Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.PublicationController");
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Check Publication controller");
     }
+    @Override
     public void UpdateLanguage() {
         try {
             //Buscamos el idioma en la configuracion del usuario
-            Language language=User_optionsDAO.get_instance().FindLanguage(user.getUser_name()).getLanguage();
+            Language language= Objects.requireNonNull(User_optionsDAO.get_instance().FindLanguage(user.getUser_name())).getLanguage();
             Menu_options.setText(Translated.get_instance().getTraslated().map.get(language.name())
                     .map.get("Publication_Menu_options"));//buscamos la clave del objeto traducido en el mapa del idioma
         } catch (SQLException e) {
+            logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);
         }
     }
+    @Override
     public void setData(UserDTO u, PublicationDTO p){
         try {
-            this.p=p;
-            this.user=u;
-            UpdateLanguage();
-            this.Label_Date.setText(p.getBeetwenDate());
-            this.Label_LikeCount.setText(String.valueOf(LikeDAO.get_instance().findById(p.getPublication().getId()).size()));
-            this.Label_ShareCount.setText(String.valueOf(ShareDAO.get_instance().findById(p.getPublication().getId()).size()));
-            this.TextArea_Text.setText(p.getPublication().getText());
-            this.label_UserName.setText(p.getPublication().getUser().getUser_name());
+            if(u!=null && p!=null){
+                this.p=p;
+                this.user=u;
+                UpdateLanguage();
+                this.Label_Date.setText(p.getBeetwenDate());
+                this.Label_LikeCount.setText(String.valueOf(LikeDAO.get_instance().findById(p.getPublication().getId()).size()));
+                this.Label_ShareCount.setText(String.valueOf(Objects.requireNonNull(ShareDAO.get_instance().findById(p.getPublication().getId())).size()));
+                this.TextArea_Text.setText(p.getPublication().getText());
+                this.label_UserName.setText(p.getPublication().getUser().getUser_name());
+            }else{
+                logger.log(Level.WARNING,"was not going to can set data on function 'setData()' because UserDTO or PublicationDTO its null");
+            }
             optionsAvalaible();
         } catch (SQLException e) {
+            logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);
         }
     }
+    @Override
     public void Liked(){
         try {
             if(LikeDAO.get_instance().findLike(p.getPublication().getId(),user.getUser_name())!=null){
@@ -78,9 +91,16 @@ public class PublicationController implements Initializable {
             }
 
         } catch (SQLException e) {
+            logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Metodo intermediario encargado de validar si existe o no el share. A partir de existir o no ejecutara
+     * llamara al dao para agregar un nuevo share o borrarlo
+     */
+    @Override
     public void shared(){
         try {
             if(ShareDAO.get_instance().findShare(p.getPublication().getId(),user.getUser_name())!=null){
@@ -92,20 +112,33 @@ public class PublicationController implements Initializable {
             }
 
         } catch (SQLException e) {
+            logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Metodo que habilitara el boton de opciones de la publicaciones en caso de que se valide que la publicacion
+     * le pertenece al usuario
+     */
+    @Override
     public void optionsAvalaible(){
         if(!p.publication.getUser().getUser_name().equals(user.getUser_name())){
             this.Menu_options.setVisible(false);
         }
     }
+
+    /**
+     * Metodo que ejecutara el proceso de borrado de una publicacion. Sera el intermediario entre el controller y el DAO
+     */
+    @Override
     public void deleted(){
         try {
             if(PublicationDAO.getInstance().delete(this.p.getPublication().getId())){
                 Execute.mainController.updatePublicationPanel();
             }
         } catch (SQLException e) {
+            logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);
         }
     }

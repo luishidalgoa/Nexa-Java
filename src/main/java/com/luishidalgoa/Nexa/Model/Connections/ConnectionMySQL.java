@@ -1,14 +1,10 @@
 package com.luishidalgoa.Nexa.Model.Connections;
+
 import com.luishidalgoa.Nexa.Utils.XMLManager;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 public class ConnectionMySQL {
 

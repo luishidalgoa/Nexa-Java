@@ -1,10 +1,10 @@
 package com.luishidalgoa.Nexa.Utils;
 
-import java.io.File;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import java.io.File;
 
 public class XMLManager {
     public static <T> boolean writeXML(T c, String fichero) {

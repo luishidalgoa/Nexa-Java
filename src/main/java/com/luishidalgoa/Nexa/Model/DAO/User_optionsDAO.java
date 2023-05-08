@@ -1,5 +1,6 @@
 package com.luishidalgoa.Nexa.Model.DAO;
 
+import com.luishidalgoa.Nexa.Interfaces.iDAOS.iUser_optionsDAO;
 import com.luishidalgoa.Nexa.Model.Connections.ConnectionMySQL;
 import com.luishidalgoa.Nexa.Model.Domain.User.User_options;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class User_optionsDAO {
+public final class User_optionsDAO implements iUser_optionsDAO {
     private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.User_optionsDAO");
     private final Connection con;
     private static User_optionsDAO _instance;
@@ -20,19 +21,13 @@ public final class User_optionsDAO {
         this.con= ConnectionMySQL.getConnect();
     }
 
-    public static User_optionsDAO get_instance() {
-        if(_instance==null){
-            _instance=new User_optionsDAO();
-        }
-        return _instance;
-    }
-
     /**
      * Este metodo busca en la base de datos el lenguaje predefenido por el usuario en sus opciones (user_options).
      * @param username nombre usuario del cual extraeremos su configuracion
      * @return devuelve el objeto de los opciones del usuario
      * @throws SQLException dd
      */
+    @Override
     public User_options FindLanguage(String username) throws SQLException {
         PreparedStatement p= this.con.prepareStatement("CALL nexadatabase.User_optionsFindLanguage(?)");
         p.setString(1,username);
@@ -52,6 +47,7 @@ public final class User_optionsDAO {
      * @param Language idioma a insertar
      * @throws SQLException dd
      */
+    @Override
     public void updateLanguage(String username, String Language) throws SQLException {
         if (UserDAO.getInstance().searchUser(username)!=null){
             PreparedStatement p= this.con.prepareStatement("CALL nexadatabase.User_optionsUpdateLanguage(?,?)");
@@ -62,5 +58,11 @@ public final class User_optionsDAO {
                 logger.log(Level.WARNING,"WARNING. Failed to update user language settings");
             }
         }
+    }
+    public static User_optionsDAO get_instance() {
+        if(_instance==null){
+            _instance=new User_optionsDAO();
+        }
+        return _instance;
     }
 }

@@ -1,13 +1,18 @@
 package com.luishidalgoa.Nexa.Controller;
 
 import com.luishidalgoa.Nexa.Execute;
-import com.luishidalgoa.Nexa.Model.DAO.*;
+import com.luishidalgoa.Nexa.Interfaces.iControllers.iControllerHome;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
-import com.luishidalgoa.Nexa.Model.DTO.*;
+import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
+import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
+import com.luishidalgoa.Nexa.Model.DTO.HashMapSerializable;
+import com.luishidalgoa.Nexa.Model.DTO.PublicationDTO;
+import com.luishidalgoa.Nexa.Model.DTO.Translated;
+import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Publication;
 import com.luishidalgoa.Nexa.Thread.ThreadUpdatePublications;
-import com.luishidalgoa.Nexa.Interfaces.iControllers.iControllerHome;
-import com.luishidalgoa.Nexa.Utils.*;
+import com.luishidalgoa.Nexa.Utils.Login;
+import com.luishidalgoa.Nexa.Utils.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

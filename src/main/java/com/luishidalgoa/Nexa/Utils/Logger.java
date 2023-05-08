@@ -2,10 +2,8 @@ package com.luishidalgoa.Nexa.Utils;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.SimpleFormatter;
-
-
 import java.util.logging.Level;
+import java.util.logging.SimpleFormatter;
 public class Logger {
     public static java.util.logging.Logger CreateLogger(String filename) {
         java.util.logging.Logger logger= java.util.logging.Logger.getLogger(filename);

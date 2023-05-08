@@ -1,7 +1,6 @@
 package com.luishidalgoa.Nexa.Model.Domain.User;
 
 import java.util.Objects;
-import java.util.Set;
 
 public class User {
     protected String user_name;

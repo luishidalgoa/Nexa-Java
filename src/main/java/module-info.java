@@ -12,4 +12,6 @@ module com.luishidalgoa.Nexa {
 
     // other module declarations here
     opens com.luishidalgoa.Nexa.Model.Connections;
+    exports com.luishidalgoa.Nexa.Interfaces.iControllers;
+    opens com.luishidalgoa.Nexa.Interfaces.iControllers to javafx.fxml;
 }

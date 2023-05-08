@@ -46,6 +46,10 @@ public class PublicationController implements Initializable, iPublicationControl
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Check Publication controller");
     }
+
+    /**
+     * Este metodo se encarga de actualizar todo lo referente a la card
+     */
     @Override
     public void UpdateLanguage() {
         try {
@@ -58,6 +62,13 @@ public class PublicationController implements Initializable, iPublicationControl
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Seteara los datos recividos desde HomeController 'UpdatePublications()' a despues de haber buscado todas las publicaciones
+     * De modo que construira la card para posteriormente en UpdatePublication() cargarlo
+     * @param u usuario de la publicacion
+     * @param p Contenido de la publicacion
+     */
     @Override
     public void setData(UserDTO u, PublicationDTO p){
         try {
@@ -79,6 +90,10 @@ public class PublicationController implements Initializable, iPublicationControl
             throw new RuntimeException(e);
         }
     }
+    /**
+     * Metodo intermediario encargado de validar si existe o no el like. A partir de existir o no ejecutara
+     * llamara al dao para agregar un nuevo share o borrarlo
+     */
     @Override
     public void Liked(){
         try {

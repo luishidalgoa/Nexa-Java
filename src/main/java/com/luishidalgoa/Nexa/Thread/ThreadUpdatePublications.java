@@ -6,17 +6,18 @@ import javafx.application.Platform;
 import javafx.fxml.Initializable;
 
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ThreadUpdatePublications extends Thread{
     private int PublicationsCount;
-    private Initializable Controller;
+    private final Initializable Controller;
     private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Thread.ThreadUpdatePublication");
     public ThreadUpdatePublications(Initializable Controller) {
         this.Controller=Controller;
         try {
-            this.PublicationsCount=PublicationDAO.getInstance().findAll().size();
+            this.PublicationsCount= Objects.requireNonNull(PublicationDAO.getInstance().findAll()).size();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -25,11 +26,9 @@ public class ThreadUpdatePublications extends Thread{
     public void run() {
         try {
             while (true){
-                if(PublicationDAO.getInstance().findAll().size()!=PublicationsCount){
-                    PublicationsCount=PublicationDAO.getInstance().findAll().size();
-                    Platform.runLater(() -> {
-                        ((HomeController)Controller).updatePublicationPanel();
-                    });
+                if(Objects.requireNonNull(PublicationDAO.getInstance().findAll()).size()!=PublicationsCount){
+                    PublicationsCount= Objects.requireNonNull(PublicationDAO.getInstance().findAll()).size();
+                    Platform.runLater(() -> ((HomeController)Controller).updatePublicationPanel()); //LAMBDA
                     logger.log(Level.INFO,"Ok. The thread updated");
                 }
                 Thread.sleep(5000);

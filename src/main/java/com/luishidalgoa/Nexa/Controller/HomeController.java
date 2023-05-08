@@ -7,6 +7,7 @@ import com.luishidalgoa.Nexa.Model.DTO.*;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Publication;
 import com.luishidalgoa.Nexa.Model.Enum.Language;
 import com.luishidalgoa.Nexa.Thread.ThreadUpdatePublications;
+import com.luishidalgoa.Nexa.Interfaces.iControllers.iControllerHome;
 import com.luishidalgoa.Nexa.Utils.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +26,7 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, iControllerHome  {
     @FXML
     private TextArea textField_post;
     @FXML

@@ -13,7 +13,6 @@ public interface iUserDAO {
      * Este metodo devolvera un usuario con el nombre pasado por parametro
      */
     public UserDTO searchUser(String user_name) throws SQLException;
-    public User findUser(String user_name) throws SQLException;
     public boolean save(User entity) throws SQLException;
     public boolean delete(String user_name) throws SQLException;
 }

@@ -55,7 +55,7 @@ public abstract class Social {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Social social = (Social) o;
-        return Objects.equals(id, social.id) && Objects.equals(publication.getId(), social.publication.getId()) && Objects.equals(user.getUser().getUser_name(), social.user.getUser().getUser_name());
+        return Objects.equals(id, social.id) && Objects.equals(publication.getId(), social.publication.getId()) && Objects.equals(user.getUser_name(), social.user.getUser_name());
     }
 
     @Override

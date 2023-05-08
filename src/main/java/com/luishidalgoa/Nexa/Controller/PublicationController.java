@@ -45,7 +45,7 @@ public class PublicationController implements Initializable {
     public void UpdateLanguage() {
         try {
             //Buscamos el idioma en la configuracion del usuario
-            Language language=User_optionsDAO.get_instance().FindLanguage(user.getUser().getUser_name()).getLanguage();
+            Language language=User_optionsDAO.get_instance().FindLanguage(user.getUser_name()).getLanguage();
             Menu_options.setText(Translated.get_instance().getTraslated().map.get(language.name())
                     .map.get("Publication_Menu_options"));//buscamos la clave del objeto traducido en el mapa del idioma
         } catch (SQLException e) {
@@ -61,7 +61,7 @@ public class PublicationController implements Initializable {
             this.Label_LikeCount.setText(String.valueOf(LikeDAO.get_instance().findById(p.getPublication().getId()).size()));
             this.Label_ShareCount.setText(String.valueOf(ShareDAO.get_instance().findById(p.getPublication().getId()).size()));
             this.TextArea_Text.setText(p.getPublication().getText());
-            this.label_UserName.setText(p.getPublication().getUser().getUser().getUser_name());
+            this.label_UserName.setText(p.getPublication().getUser().getUser_name());
             optionsAvalaible();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -69,8 +69,8 @@ public class PublicationController implements Initializable {
     }
     public void Liked(){
         try {
-            if(LikeDAO.get_instance().findLike(p.getPublication().getId(),user.getUser().getUser_name())!=null){
-                LikeDAO.get_instance().delete(p.getPublication().getId(),user.getUser().getUser_name());
+            if(LikeDAO.get_instance().findLike(p.getPublication().getId(),user.getUser_name())!=null){
+                LikeDAO.get_instance().delete(p.getPublication().getId(),user.getUser_name());
                 Label_LikeCount.setText(String.valueOf(Integer.parseInt(Label_LikeCount.getText())-1));
             }else {
                 LikeDAO.get_instance().save(new Like(p.getPublication(),user));
@@ -83,8 +83,8 @@ public class PublicationController implements Initializable {
     }
     public void shared(){
         try {
-            if(ShareDAO.get_instance().findShare(p.getPublication().getId(),user.getUser().getUser_name())!=null){
-                ShareDAO.get_instance().delete(p.getPublication().getId(),user.getUser().getUser_name());
+            if(ShareDAO.get_instance().findShare(p.getPublication().getId(),user.getUser_name())!=null){
+                ShareDAO.get_instance().delete(p.getPublication().getId(),user.getUser_name());
                 Label_ShareCount.setText(String.valueOf(Integer.parseInt(Label_ShareCount.getText())-1));
             }else {
                 ShareDAO.get_instance().save(new Share(p.getPublication(),user));
@@ -96,7 +96,7 @@ public class PublicationController implements Initializable {
         }
     }
     public void optionsAvalaible(){
-        if(!p.publication.getUser().getUser().getUser_name().equals(user.getUser().getUser_name())){
+        if(!p.publication.getUser().getUser_name().equals(user.getUser_name())){
             this.Menu_options.setVisible(false);
         }
     }

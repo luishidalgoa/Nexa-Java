@@ -57,14 +57,14 @@ public class HomeController implements Initializable, iControllerHome  {
     private UserDTO user_logged;
     PublicationDAO publicationDAO = PublicationDAO.getInstance();
 
-    public HomeController() throws SQLException {
+    public HomeController() {
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Check Home controller");
         user_logged= Login.Sing_in("Luis","1234");
-        label_userName.setText(user_logged.getUser().getUser_name());
+        label_userName.setText(user_logged.getUser_name());
         updatePublicationPanel();
         suggestion_panel();
         UpdateLanguage();
@@ -73,6 +73,11 @@ public class HomeController implements Initializable, iControllerHome  {
         threadUpdatePublications.start();
     }
 
+    /**
+     * Este metodo en primera instancia buscara una coleccion de usuarios para posteriormente iterar la coleccion e
+     * inicializar una vista de la misma incluido su controller. Posteriormente insertaremos el nodo dentro del container
+     * de nuestro HomeController
+     */
     public void suggestion_panel() {
         Set<UserDTO> users = getRecommendUsers();
         if (users != null) {
@@ -92,7 +97,9 @@ public class HomeController implements Initializable, iControllerHome  {
     }
 
     /**
-     * Metodo encargado de mostrar por pantalla una coleccion de publicacion
+     * Este metodo en primera instancia buscara una coleccion de publicaciones para posteriormente iterar la coleccion e
+     * inicializar una vista de la misma incluido su controller. Posteriormente insertaremos el nodo dentro del container
+     * de nuestro HomeController
      */
     public void updatePublicationPanel() {
         for (int i = vBox_publications.getChildren().size() - 1; i >= 2; i--) {
@@ -115,6 +122,10 @@ public class HomeController implements Initializable, iControllerHome  {
         }
     }
 
+    /**
+     * Este metodo extraera el texto insertado dentro del textField_Post de nuestra vista. de modo que construira
+     * una publicacion y la guardara en la bbdd . por ultimo ejecutara el metodo @updatePublicationPanel()
+     */
     public void post() {
         try {
             if (textField_post.getText().length() > 0 && textField_post.getText().length() <= 255) {
@@ -128,6 +139,11 @@ public class HomeController implements Initializable, iControllerHome  {
         }
     }
 
+    /**
+     * El proposito de este metodo es extraer todas las publicaciones y llamar a otro metodo el cual ordenara la lista
+     * Este metodo esta pensado para ser utilizado en el metodo updatePublicationPanel()
+     * @return dd
+     */
     private Set<PublicationDTO> getAllPublications() {
         try {
             Set<PublicationDTO>publications= publicationDAO.findAll();
@@ -137,7 +153,11 @@ public class HomeController implements Initializable, iControllerHome  {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * El proposito de este metodo es extraer todos los usuarios de la bbdd
+     * Este metodo esta pensado para ser utilizado en el metodo Suggestion_Panel()
+     * @return
+     */
     private Set<UserDTO> getRecommendUsers() {
         try {
             Set<UserDTO> result = new HashSet<>();
@@ -165,7 +185,7 @@ public class HomeController implements Initializable, iControllerHome  {
     public void UpdateLanguage() {
         try {
             //Buscamos el idioma en la configuracion del usuario
-            Language language=User_optionsDAO.get_instance().FindLanguage(user_logged.getUser().getUser_name()).getLanguage();
+            Language language=User_optionsDAO.get_instance().FindLanguage(user_logged.getUser_name()).getLanguage();
             Home_Home.setText(Translated.get_instance().getTraslated().map.get(language.name()).map.get("Home_Home")); //buscamos la clave del objeto traducido en el mapa del idioma
             Home_Collections.setText(Translated.get_instance().getTraslated().map.get(language.name()).map.get("Home_Collections"));
             Home_Message.setText(Translated.get_instance().getTraslated().map.get(language.name()).map.get("Home_Message"));

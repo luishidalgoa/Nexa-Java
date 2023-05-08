@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class LikeDAO implements iLikeDAO {
-    private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.LikeDAO");
+    private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.Publications.LikeDAO");
     private final Connection con;
     //Almacenaremos los DAOS de user y publication
     private static LikeDAO _instance;
@@ -58,7 +58,7 @@ public final class LikeDAO implements iLikeDAO {
         PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikesDelete`(?)");
         p.setInt(1, id_publication);
         p.executeUpdate();
-        if(findById(id_publication)!=null){
+        if(findById(id_publication).size()>0){
             logger.log(Level.SEVERE,"ERROR. The Like with id publication "+id_publication+ " could´nt be deleted");
             return false;
         }
@@ -67,13 +67,13 @@ public final class LikeDAO implements iLikeDAO {
 
     @Override
     public boolean save(Like entity) throws SQLException {
-        if (findLike(entity.publication.getId(), entity.user.getUser().getUser_name()) == null) {
+        if (findLike(entity.publication.getId(), entity.user.getUser_name()) == null) {
             PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikeSave`(?,?)");
             p.setInt(1, entity.publication.getId());
-            p.setString(2, entity.user.getUser().getUser_name());
+            p.setString(2, entity.user.getUser_name());
             p.executeUpdate();
         } else {
-            logger.log(Level.SEVERE,"ERROR. Could´t be saved The like with publication_id "+ entity.getPublication().getId()+ " and user_name to user "+ entity.getUser().getUser().getUser_name());
+            logger.log(Level.SEVERE,"ERROR. Could´t be saved The like with publication_id "+ entity.getPublication().getId()+ " and user_name to user "+ entity.getUser().getUser_name());
             return false;
         }
         return true;

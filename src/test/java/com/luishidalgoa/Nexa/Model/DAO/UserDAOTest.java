@@ -27,7 +27,7 @@ class UserDAOTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(aux.getUser().getUser_name(),"Luis");
+        assertEquals(aux.getUser_name(),"Luis");
     }
     @Test
     void searchUserNull() {
@@ -37,7 +37,7 @@ class UserDAOTest {
             throw new RuntimeException(e);
         }
     }
-    /*@Test
+    @Test
     void save(){
         User aux=new User("prueba","123","");
         try {
@@ -45,11 +45,11 @@ class UserDAOTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
     @Test
     void delete(){
         try{
-            assertEquals(userDAO.delete("prueba"),false);
+            assertEquals(userDAO.delete("prueba"),true);
         }catch (SQLException e){
             e.printStackTrace();
         }

@@ -100,7 +100,6 @@ public final class LikeDAO implements iLikeDAO {
         }
         if (result.getUser() == null || result.getPublication() == null) {
             result = null;
-            logger.log(Level.WARNING,"WARNING. The Like with id publication "+id_publication+ " and user_name to user "+ user_name+" Could´t found");
         }
         return result;
     }
@@ -127,7 +126,6 @@ public final class LikeDAO implements iLikeDAO {
                 aux.setPublication(publicationDAO.findById(id_publication).getPublication());
                 result.add(aux);
             }else{
-                logger.log(Level.WARNING,"WARNING. Could´t found the publication with id "+id_publication);
             }
         }
         return result;

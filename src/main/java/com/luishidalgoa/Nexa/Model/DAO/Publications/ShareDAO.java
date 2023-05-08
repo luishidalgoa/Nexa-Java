@@ -113,7 +113,6 @@ public final class ShareDAO implements iShareDAO {
             result.setUser(UserDAO.getInstance().searchUser(user_name));
         }
         if (result.getUser() == null || result.getPublication() == null) {
-            logger.log(Level.WARNING, "The publication with id "+id_publication+ " Hasn´t could shared found");
             result = null;
         }
         return result;
@@ -141,7 +140,6 @@ public final class ShareDAO implements iShareDAO {
                 aux.setPublication(publicationDAO.findById(id_publication).getPublication());
                 result.add(aux);
             }else{
-                logger.log(Level.SEVERE, "The share of publication with id "+id_publication+ " Could not find.Inserted a null object");
                 return null;
             }
         }

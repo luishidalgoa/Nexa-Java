@@ -84,7 +84,6 @@ public class UserDAO implements iUserDAO{
             aux.setBiography(set.getString("biography"));
             return buildDTO(aux);
         }
-        logger.log(Level.WARNING,"WARNING. Has not can found the user with username "+ user_name);
         return null;
     }
 

@@ -56,7 +56,6 @@ public final class PublicationDAO implements iPublicationDAO {
             result.add(new PublicationDTO(aux));
         }
         if(result.size() == 0){
-            logger.log(Level.SEVERE,"Warning. The publicationDTO list has been empty");
             result=null;
         }
         return result;
@@ -83,7 +82,6 @@ public final class PublicationDAO implements iPublicationDAO {
             result.add(aux);
         }
         if(result.size()==0){
-            logger.log(Level.SEVERE,"Warning. The publicationDTO list has been empty");
             result=null;
         }
         return result;
@@ -105,7 +103,6 @@ public final class PublicationDAO implements iPublicationDAO {
             result.getPublication().setPublication_date(set.getTimestamp("publication_date"));
         }
         if(result.getPublication().getId()==null){
-            logger.log(Level.SEVERE,"Warning. The publicationDTO has been empty");
             result=null;
         }
         return result;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="104.0" prefWidth="166.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luishidalgoa.Nexa.Controller.OptionsPanel">
+   <children>
+      <VBox prefHeight="106.0" prefWidth="166.0" spacing="25.0">
+         <children>
+            <MenuButton contentDisplay="RIGHT" mnemonicParsing="false" popupSide="RIGHT" prefHeight="40.0" prefWidth="200.0" text="Theme">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Light" />
+                <MenuItem mnemonicParsing="false" text="Dark" />
+              </items>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </MenuButton>
+            <MenuButton contentDisplay="RIGHT" mnemonicParsing="false" popupSide="RIGHT" prefHeight="40.0" prefWidth="200.0" text="Language">
+               <items>
+                  <MenuItem fx:id="EN" mnemonicParsing="false" onAction="#handleEN" text="English" />
+                  <MenuItem fx:id="ES" mnemonicParsing="false" onAction="#handleES" text="Spanish" />
+               </items>
+            </MenuButton>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

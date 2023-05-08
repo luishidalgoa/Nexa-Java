@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="180.0" prefWidth="268.0" style="-fx-background-color: white; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luishidalgoa.Nexa.Controller.PublicationController">
+   <children>
+      <HBox prefHeight="48.0" prefWidth="270.0" spacing="5.0">
+         <children>
+            <Pane prefHeight="48.0" prefWidth="53.0">
+               <children>
+                  <ImageView fitHeight="41.0" fitWidth="40.0" layoutX="7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../static/images/users/User.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Pane>
+            <VBox prefHeight="48.0" prefWidth="91.0">
+               <children>
+                  <Label fx:id="label_UserName" prefHeight="27.0" prefWidth="60.0" text="User name" />
+                  <Label fx:id="Label_Date" text="Date" />
+               </children>
+            </VBox>
+            <Pane prefHeight="48.0" prefWidth="32.0" />
+            <MenuButton fx:id="Menu_options" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Options">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#deleted" text="Delete" />
+                <MenuItem mnemonicParsing="false" text="Update" />
+              </items>
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </MenuButton>
+         </children>
+      </HBox>
+      <HBox prefHeight="101.0" prefWidth="269.0">
+         <children>
+            <TextArea fx:id="TextArea_Text" editable="false" prefHeight="101.0" prefWidth="267.0" style="-fx-background-color: white; -fx-border-color: white;" wrapText="true" />
+         </children>
+      </HBox>
+      <HBox prefHeight="24.0" prefWidth="270.0">
+         <children>
+            <Pane prefHeight="24.0" prefWidth="74.0" />
+            <HBox onMouseClicked="#Liked" prefHeight="24.0" prefWidth="48.0">
+               <children>
+                  <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../static/images/icons/heart.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="Label_LikeCount" prefHeight="20.0" prefWidth="47.0" text="0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="76.0" layoutY="10.0" prefHeight="24.0" prefWidth="48.0">
+               <children>
+                  <ImageView fitHeight="39.0" fitWidth="28.0" onMouseClicked="#shared" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../static/images/icons/Retuit.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="Label_ShareCount" prefHeight="20.0" prefWidth="47.0" text="0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="124.0" layoutY="10.0" prefHeight="24.0" prefWidth="19.0">
+               <children>
+                  <ImageView fitHeight="39.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../static/images/icons/bookmark.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="3.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </children>
+</FlowPane>

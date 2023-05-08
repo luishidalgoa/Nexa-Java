@@ -23,6 +23,10 @@ public class ThreadUpdatePublications extends Thread{
         }
     }
 
+    /**
+     * Metodo que se ejecutara al inicializarse el hilo. El objetivo es realizar constantemente durante
+     * la vida util del propio , consultas a la bbdd preguntando si existen nuevas publicaciones
+     */
     public void run() {
         try {
             while (true){

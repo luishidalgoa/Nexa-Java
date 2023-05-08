@@ -35,15 +35,19 @@ public final class LikeDAO implements iLikeDAO {
      */
     @Override
     public boolean delete(int id_publication, String user_name) throws SQLException {
-        PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikeDelete`(?,?)");
-        p.setInt(1, id_publication);
-        p.setString(2, user_name);
-        p.executeUpdate();
-        if (findLike(id_publication, user_name) != null) {
-            logger.log(Level.SEVERE,"Error. The Like hasn´t been saved");
+        if(findLike(id_publication,user_name)!=null){
+            PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikeDelete`(?,?)");
+            p.setInt(1, id_publication);
+            p.setString(2, user_name);
+            p.executeUpdate();
+            if (findLike(id_publication, user_name) != null) {
+                logger.log(Level.WARNING,"WARNING. The Like hasn´t been deleted");
+                return false;
+            }
+        }else{
+            logger.log(Level.WARNING, "WARNING. The publication like with id "+id_publication+ "and username "+ user_name+" Hasn´t could found");
             return false;
         }
-        logger.log(Level.INFO,"Ok. The Like has been saved");
         return true;
     }
 

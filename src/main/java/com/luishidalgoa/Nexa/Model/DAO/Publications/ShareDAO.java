@@ -41,12 +41,12 @@ public final class ShareDAO implements iShareDAO {
             p.setInt(1, id_publication);
             p.setString(2, user_name);
             p.executeUpdate();
-            if (findShare(id_publication, user_name) == null) {
+            if (findShare(id_publication, user_name) != null) {
                 logger.log(Level.SEVERE,"WARNING. couldn´t delete post. The post with id "+ id_publication +" and username "+user_name+" hasn´t could delete");
                 return false;
             }
         }else{
-            logger.log(Level.WARNING, "WARNING. The publication with id "+id_publication+ "and username "+ user_name+" Hasn´t could found");
+            logger.log(Level.WARNING, "WARNING. The publication share with id "+id_publication+ "and username "+ user_name+" Hasn´t could found");
             return false;
         }
         return true;

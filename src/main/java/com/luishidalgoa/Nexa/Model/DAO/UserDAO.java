@@ -3,7 +3,6 @@ import com.luishidalgoa.Nexa.Interfaces.iDAOS.iUserDAO;
 import com.luishidalgoa.Nexa.Model.Connections.ConnectionMySQL;
 import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
 import com.luishidalgoa.Nexa.Model.Domain.User.User;
-import com.luishidalgoa.Nexa.Utils.Login;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,24 +10,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserDAO implements iUserDAO{
-    private final String findAll="Select * from nexadatabase.user";
-    private final String searchUser="Select * from nexadatabase.user where user_name=?";
-    private final String save= "insert into nexadatabase.user(user_name,pass,biography) values(?,?,?)";
-    private final String delete="Delete from nexadatabase.user where user_name=?";
-    private Connection con;
+    private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.UserDAO");
+    private final Connection con;
     private static UserDAO _instance;
 
     private UserDAO() {
         this.con = ConnectionMySQL.getConnect();
     }
 
-
-
+    /**
+     * Este metodo devolvera una lista de todos los usuarios que existan en la bbdd. Soy consciente que para un proyecto
+     * pequeño como este es una opcion valida . Sin embargo me gustaria aprender a crear algoritmos complejos
+     * para de algun modo devolver una lista mas selectiva en lugar de todos los usuarios lo cual en cuanto a rendimiento
+     * es menos eficiente
+     * @return dd
+     * @throws SQLException dd
+     */
     @Override
     public Set<UserDTO> findAll() throws SQLException {
-        PreparedStatement p= con.prepareStatement(findAll);
+        PreparedStatement p= con.prepareStatement("CALL nexadatabase.UserFindAll()");
         ResultSet users= p.executeQuery();
         Set<UserDTO>result=new HashSet<>();
         while(users.next()){
@@ -40,17 +44,40 @@ public class UserDAO implements iUserDAO{
         }
         return result;
     }
-    public UserDTO buildDTO(User aux){
+
+    /**
+     * El objetivo de este metodo es construir un DTO de usuario. de este modo refactorizo mi codigo. Pero esta pensado para
+     * ser usado exclusivamente en el DAO
+     * @param aux Objeto del cual crearemos el DAO
+     * @return dd
+     */
+    private UserDTO buildDTO(User aux){
         UserDTO result=new UserDTO();
-        result.setUser(aux);
+        if(aux!=null){
+            result.setUser_name(aux.getUser_name());
+            result.setBiography(aux.getBiography());
+            try {
+                result.setUserOptions(User_optionsDAO.get_instance().FindLanguage(aux.getUser_name()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return result;
     }
+
+    /**
+     * Metodo el cual devolvera un DTO de usuario . Este metodo buscara en la base de datos si existe el usuario solicitado
+     * Y lo devolvera en forma de DTO por motivos de seguridad ademas de motivos de simplificacion
+     * @param user_name Nombre de usuario solicitado
+     * @return dd
+     * @throws SQLException dd
+     */
     @Override
     public UserDTO searchUser(String user_name) throws SQLException {
-        PreparedStatement p=this.con.prepareStatement(searchUser);
+        PreparedStatement p=this.con.prepareStatement("CALL nexadatabase.UserSearchUser(?)");
         p.setString(1,user_name);
         ResultSet set=p.executeQuery();
-        while (set.next()){
+        if(set.next()){
             User aux= new User();
             aux.setUser_name(set.getString("user_name"));
             aux.setPassword(set.getString("pass"));
@@ -64,12 +91,11 @@ public class UserDAO implements iUserDAO{
      * A diferencia del dto el cual no devuelve una constraseña por seguridad.
      * esta cosulta devolveria un usuario con su password. El objetivo unico de esta consulta
      * es devolverselo al sistema logueo
-     * @param user_name
-     * @return
+     * @param user_name dd
+     * @return dd
      */
-    @Override
-    public User findUser(String user_name) throws SQLException {
-        PreparedStatement p=this.con.prepareStatement(searchUser);
+    private User findUser(String user_name) throws SQLException {
+        PreparedStatement p=this.con.prepareStatement("CALL nexadatabase.UserSearchUser(?)");
         p.setString(1,user_name);
         ResultSet set=p.executeQuery();
         User result=new User();
@@ -86,38 +112,62 @@ public class UserDAO implements iUserDAO{
 
 
     //----------
+
+    /**
+     * Una vez verificado la identidad desde el metodo Sing_in de la clase Utils.Login. Retornara el usuario Construido en DTO
+     * @param username Usuario en el que se iniciara la sesion
+     * @param password la contraseña del usuario
+     * @return dd
+     * @throws SQLException dd
+     */
     public UserDTO signIn(String username, String password) throws SQLException {
         if(findUser(username).getPassword().equals(password)){
             return searchUser(username);
         }
-
+        logger.log(Level.SEVERE,"Couldn´t sing in with the user count "+username);
         return null;
     }
 
-
+    /**
+     * Guardara los datos de un nuevo usuario. Este metodo sera llamado desde el metodo Sing_Up de la clase Utils.Login
+     * @param entity Usuario del cual guardaremos la informacion en la bbdd
+     * @return dd
+     * @throws SQLException dd
+     */
     @Override
     public boolean save(User entity) throws SQLException {
-        PreparedStatement p= this.con.prepareStatement(save);
+        PreparedStatement p= this.con.prepareStatement("CALL nexadatabase.UserSave(?,?,?)");
         UserDTO aux=searchUser(entity.getUser_name());
         if(aux == null && searchUser(entity.getUser_name())==null){
             p.setString(1,entity.getUser_name());
-            p.setString(2,new String(entity.getPassword()));
+            p.setString(2, entity.getPassword());
             p.setString(3,entity.getBiography());
             p.executeUpdate();
         }else{
+            logger.log(Level.WARNING,"WARNING. Has not could saved the user with user_name "+entity.getUser_name());
             return false;
         }
         return true;
     }
 
+    /**
+     * Eliminara el usuario solicitado de la base de datos
+     * @param user_name usuario a eliminar
+     * @return dd
+     * @throws SQLException dd
+     */
     @Override
     public boolean delete(String user_name) throws SQLException {
-        if(user_name!=null){
-            PreparedStatement p = this.con.prepareStatement(delete);
+        if(user_name!=null && searchUser(user_name)!=null){
+            PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.UserDelete(?)");
             p.setString(1,user_name);
             p.executeUpdate();
         }
-        return (searchUser(user_name)!=null);
+        if(searchUser(user_name)!=null){
+            logger.log(Level.WARNING,"WARNING. The user with user_name "+ user_name +" Has not could been deleted");
+            return false;
+        }
+        return true;
     }
 
     public static UserDAO getInstance(){

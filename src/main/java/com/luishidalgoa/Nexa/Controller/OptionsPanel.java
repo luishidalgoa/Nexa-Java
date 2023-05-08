@@ -4,7 +4,6 @@ import com.luishidalgoa.Nexa.Execute;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
 import com.luishidalgoa.Nexa.Model.Enum.Language;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
@@ -22,7 +21,7 @@ public class OptionsPanel implements Initializable {
     @FXML
     public void handleEN(ActionEvent event) {
         try {
-            User_optionsDAO.get_instance().update(Execute.mainController.getUser_logged().getUser().getUser_name(), Language.EN.name());
+            User_optionsDAO.get_instance().updateLanguage(Execute.mainController.getUser_logged().getUser_name(), Language.EN.name());
             Execute.mainController.UpdateLanguage();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -32,7 +31,7 @@ public class OptionsPanel implements Initializable {
     @FXML
     public void handleES(ActionEvent event) {
         try {
-            User_optionsDAO.get_instance().update(Execute.mainController.getUser_logged().getUser().getUser_name(), Language.ES.name());
+            User_optionsDAO.get_instance().updateLanguage(Execute.mainController.getUser_logged().getUser_name(), Language.ES.name());
             Execute.mainController.UpdateLanguage();
         } catch (SQLException e) {
             throw new RuntimeException(e);

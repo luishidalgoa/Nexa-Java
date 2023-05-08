@@ -15,7 +15,7 @@ class LoginTest {
     @Test
     void sing_in() {
         UserDTO aux=Login.Sing_in("Luis","1234");
-        assertEquals(aux.getUser().getUser_name(),aux.getUser().getUser_name());
+        assertEquals(aux.getUser_name(),aux.getUser_name());
     }
 
 

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ public final class ShareDAO implements iShareDAO {
     private final Connection con;
     private static ShareDAO _instance;
     PublicationDAO publicationDAO = PublicationDAO.getInstance();
-    private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.LikeDAO");
+    private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.Publications.ShareDAO");
 
     private ShareDAO() {
         this.con = ConnectionMySQL.getConnect();
@@ -40,12 +41,12 @@ public final class ShareDAO implements iShareDAO {
             p.setInt(1, id_publication);
             p.setString(2, user_name);
             p.executeUpdate();
-            if (findShare(id_publication, user_name) == null) {
+            if (findShare(id_publication, user_name) != null) {
                 logger.log(Level.SEVERE,"WARNING. couldn´t delete post. The post with id "+ id_publication +" and username "+user_name+" hasn´t could delete");
                 return false;
             }
         }else{
-            logger.log(Level.WARNING, "WARNING. The publication with id "+id_publication+ "and username "+ user_name+" Hasn´t could found");
+            logger.log(Level.WARNING, "WARNING. The publication share with id "+id_publication+ "and username "+ user_name+" Hasn´t could found");
             return false;
         }
         return true;
@@ -59,11 +60,11 @@ public final class ShareDAO implements iShareDAO {
      */
     @Override
     public boolean delete(int id_publication) throws SQLException {
-        if(findById(id_publication)!=null){
+        if(Objects.requireNonNull(findById(id_publication)).size()>0){
             PreparedStatement p = this.con.prepareStatement("call nexadatabase.SharesDelete(?)");
             p.setInt(1, id_publication);
             p.executeUpdate();
-            if (findById(id_publication)!=null) {
+            if (Objects.requireNonNull(findById(id_publication)).size()>0) {
                 logger.log(Level.SEVERE, "ERROR. The publication with id "+id_publication+ " Hasn´t could delete");
             }
         }else{
@@ -76,20 +77,20 @@ public final class ShareDAO implements iShareDAO {
 
     @Override
     public boolean save(Share entity) throws SQLException {
-        if (findShare(entity.publication.getId(), entity.user.getUser().getUser_name()) == null) {
+        if (findShare(entity.publication.getId(), entity.user.getUser_name()) == null) {
             PreparedStatement p = this.con.prepareStatement("call nexadatabase.ShareSave(?,?)");
             p.setInt(1, entity.publication.getId());
-            p.setString(2, entity.user.getUser().getUser_name());
+            p.setString(2, entity.user.getUser_name());
             p.executeUpdate();
-            if(findShare(entity.publication.getId(),entity.getUser().getUser().getUser_name())==null){
-                logger.log(Level.SEVERE, "The publication with id "+entity.getPublication().getId()+ " Hasn´t could saved share");
+            if(findShare(entity.publication.getId(),entity.getUser().getUser_name())==null){
+                logger.log(Level.SEVERE, "To publication shared with id "+entity.getPublication().getId()+ " Hasn´t could saved share");
                 return false;
             }
         } else {
-            logger.log(Level.WARNING, "WARNING. Hans´t could saved publication. This Shared already exist");
+            logger.log(Level.WARNING, "WARNING. Hans´t could saved publication Shared. This Shared already exist");
             return false;
         }
-        return findShare(entity.publication.getId(), entity.user.getUser().getUser_name()) != null;
+        return findShare(entity.publication.getId(), entity.user.getUser_name()) != null;
     }
 
     /**
@@ -112,7 +113,6 @@ public final class ShareDAO implements iShareDAO {
             result.setUser(UserDAO.getInstance().searchUser(user_name));
         }
         if (result.getUser() == null || result.getPublication() == null) {
-            logger.log(Level.WARNING, "The publication with id "+id_publication+ " Hasn´t could found");
             result = null;
         }
         return result;
@@ -140,7 +140,6 @@ public final class ShareDAO implements iShareDAO {
                 aux.setPublication(publicationDAO.findById(id_publication).getPublication());
                 result.add(aux);
             }else{
-                logger.log(Level.SEVERE, "The share of publication with id "+id_publication+ " Could not find.Inserted a null object");
                 return null;
             }
         }

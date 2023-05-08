@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class LikeDAO implements iLikeDAO {
-    private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.LikeDAO");
+    private final static Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.Publications.LikeDAO");
     private final Connection con;
     //Almacenaremos los DAOS de user y publication
     private static LikeDAO _instance;
@@ -35,15 +35,19 @@ public final class LikeDAO implements iLikeDAO {
      */
     @Override
     public boolean delete(int id_publication, String user_name) throws SQLException {
-        PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikeDelete`(?,?)");
-        p.setInt(1, id_publication);
-        p.setString(2, user_name);
-        p.executeUpdate();
-        if (findLike(id_publication, user_name) != null) {
-            logger.log(Level.SEVERE,"Error. The Like hasn´t been saved");
+        if(findLike(id_publication,user_name)!=null){
+            PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikeDelete`(?,?)");
+            p.setInt(1, id_publication);
+            p.setString(2, user_name);
+            p.executeUpdate();
+            if (findLike(id_publication, user_name) != null) {
+                logger.log(Level.WARNING,"WARNING. The Like hasn´t been deleted");
+                return false;
+            }
+        }else{
+            logger.log(Level.WARNING, "WARNING. The publication like with id "+id_publication+ "and username "+ user_name+" Hasn´t could found");
             return false;
         }
-        logger.log(Level.INFO,"Ok. The Like has been saved");
         return true;
     }
 
@@ -58,7 +62,7 @@ public final class LikeDAO implements iLikeDAO {
         PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikesDelete`(?)");
         p.setInt(1, id_publication);
         p.executeUpdate();
-        if(findById(id_publication)!=null){
+        if(findById(id_publication).size()>0){
             logger.log(Level.SEVERE,"ERROR. The Like with id publication "+id_publication+ " could´nt be deleted");
             return false;
         }
@@ -67,13 +71,13 @@ public final class LikeDAO implements iLikeDAO {
 
     @Override
     public boolean save(Like entity) throws SQLException {
-        if (findLike(entity.publication.getId(), entity.user.getUser().getUser_name()) == null) {
+        if (findLike(entity.publication.getId(), entity.user.getUser_name()) == null) {
             PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikeSave`(?,?)");
             p.setInt(1, entity.publication.getId());
-            p.setString(2, entity.user.getUser().getUser_name());
+            p.setString(2, entity.user.getUser_name());
             p.executeUpdate();
         } else {
-            logger.log(Level.SEVERE,"ERROR. Could´t be saved The like with publication_id "+ entity.getPublication().getId()+ " and user_name to user "+ entity.getUser().getUser().getUser_name());
+            logger.log(Level.SEVERE,"ERROR. Could´t be saved The like with publication_id "+ entity.getPublication().getId()+ " and user_name to user "+ entity.getUser().getUser_name());
             return false;
         }
         return true;
@@ -100,7 +104,6 @@ public final class LikeDAO implements iLikeDAO {
         }
         if (result.getUser() == null || result.getPublication() == null) {
             result = null;
-            logger.log(Level.WARNING,"WARNING. The Like with id publication "+id_publication+ " and user_name to user "+ user_name+" Could´t found");
         }
         return result;
     }
@@ -127,7 +130,6 @@ public final class LikeDAO implements iLikeDAO {
                 aux.setPublication(publicationDAO.findById(id_publication).getPublication());
                 result.add(aux);
             }else{
-                logger.log(Level.WARNING,"WARNING. Could´t found the publication with id "+id_publication);
             }
         }
         return result;

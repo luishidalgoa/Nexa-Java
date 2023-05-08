@@ -16,8 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class PublicationDAO implements iPublicationDAO {
-    private final static Logger logger = com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.PublicationDAO");
-    private Connection con;
+    private final static Logger logger = com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Model.DAO.Publications.PublicationDAO");
+    private final Connection con;
     private static PublicationDAO _instance;
     private PublicationDAO() {
         this.con = ConnectionMySQL.getConnect();
@@ -25,14 +25,14 @@ public final class PublicationDAO implements iPublicationDAO {
 
     /**
      * Metodo para guardar una publicacion nueva
-     * @param entity
-     * @throws SQLException
+     * @param entity dd
+     * @throws SQLException dd
      */
     @Override
     public void save(Publication entity) throws SQLException {
         PreparedStatement p = this.con.prepareStatement("Call nexadatabase.PublicationSave(?,?)");
         p.setString(1, entity.getText());
-        p.setString(2, entity.getUser().getUser().getUser_name());
+        p.setString(2, entity.getUser().getUser_name());
         p.executeUpdate();
         logger.log(Level.INFO, "OK. The Publication has been saved");
     }
@@ -40,7 +40,7 @@ public final class PublicationDAO implements iPublicationDAO {
     /**
      * Este metodo buscara todas las publicaciones
      *
-     * @return
+     * @return dd
      */
     @Override
     public Set<PublicationDTO> findAll() throws SQLException {
@@ -56,7 +56,6 @@ public final class PublicationDAO implements iPublicationDAO {
             result.add(new PublicationDTO(aux));
         }
         if(result.size() == 0){
-            logger.log(Level.SEVERE,"Warning. The publicationDTO list has been empty");
             result=null;
         }
         return result;
@@ -65,8 +64,8 @@ public final class PublicationDAO implements iPublicationDAO {
     /**
      * Este metodo buscara una lista de publicaciones realizada por un usuario concreto
      *
-     * @param user_name
-     * @return
+     * @param user_name dd
+     * @return dd
      */
     @Override
     public Set<PublicationDTO> findByUser(String user_name) throws SQLException {
@@ -83,7 +82,6 @@ public final class PublicationDAO implements iPublicationDAO {
             result.add(aux);
         }
         if(result.size()==0){
-            logger.log(Level.SEVERE,"Warning. The publicationDTO list has been empty");
             result=null;
         }
         return result;
@@ -105,7 +103,6 @@ public final class PublicationDAO implements iPublicationDAO {
             result.getPublication().setPublication_date(set.getTimestamp("publication_date"));
         }
         if(result.getPublication().getId()==null){
-            logger.log(Level.SEVERE,"Warning. The publicationDTO has been empty");
             result=null;
         }
         return result;
@@ -114,8 +111,8 @@ public final class PublicationDAO implements iPublicationDAO {
     /**
      * Este metodo eliminara un publicacion
      *
-     * @param id
-     * @return
+     * @param id dd
+     * @return dd
      */
     @Override
     public boolean delete(int id) throws SQLException {

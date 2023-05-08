@@ -9,6 +9,6 @@ public class userPanelController {
     private Label label_userName;
     private UserDTO user;
     public void setData(UserDTO u){
-        this.label_userName.setText(u.getUser().getUser_name());
+        this.label_userName.setText(u.getUser_name());
     }
 }

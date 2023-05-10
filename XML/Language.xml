@@ -34,6 +34,10 @@
                         <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Suggestions</value>
                     </entry>
                     <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Publication_Update</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Update</value>
+                    </entry>
+                    <entry>
                         <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Publication_Menu_options</key>
                         <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Options</value>
                     </entry>
@@ -75,6 +79,10 @@
                     <entry>
                         <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Suggestions</key>
                         <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Recomendados</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Publication_Update</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Actualizar</value>
                     </entry>
                     <entry>
                         <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Publication_Menu_options</key>

@@ -31,4 +31,5 @@ public interface iPublicationDAO {
      * @return
      */
     public boolean delete(int id) throws SQLException;
+    public boolean update(PublicationDTO p,String text) throws SQLException;
 }

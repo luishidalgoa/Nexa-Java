@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="620.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luishidalgoa.Nexa.Controller.LoginController">
+   <children>
+      <BorderPane layoutX="123.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: d8d8d8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox prefHeight="211.0" prefWidth="930.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="211.0" prefWidth="403.0" />
+                  <ImageView fitHeight="127.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../Logo.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="80.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <HBox prefHeight="432.0" prefWidth="625.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="448.0" prefWidth="341.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                     <children>
+                        <HBox prefHeight="56.0" prefWidth="269.0">
+                           <children>
+                              <Label prefHeight="71.0" prefWidth="135.0" text="Login">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="40.0" prefWidth="269.0">
+                           <children>
+                              <TextField fx:id="TextField_user_name" prefHeight="37.0" prefWidth="272.0" promptText="User name">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </HBox>
+                        <Label fx:id="Label_warningUser" prefHeight="18.0" prefWidth="273.0" textFill="RED">
+                           <VBox.margin>
+                              <Insets left="30.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="40.0" prefWidth="269.0">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <PasswordField fx:id="PasswordField_Password" disable="true" prefHeight="40.0" prefWidth="274.0" promptText="Password">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin></PasswordField>
+                           </children>
+                        </HBox>
+                        <Pane prefHeight="31.0" prefWidth="341.0" />
+                        <HBox prefHeight="39.0" prefWidth="331.0">
+                           <children>
+                              <Label prefHeight="39.0" prefWidth="177.0" text="You don´t have an account?">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin></Label>
+                              <Hyperlink prefHeight="41.0" prefWidth="47.0" text="Link" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="41.0" prefWidth="269.0">
+                           <children>
+                              <Pane prefHeight="41.0" prefWidth="257.0">
+                                 <children>
+                                    <Label fx:id="Label_login_error" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="1.0" prefHeight="41.0" prefWidth="168.0" textFill="RED" />
+                                 </children></Pane>
+                              <Button fx:id="btn_login" mnemonicParsing="false" onMouseClicked="#login" prefHeight="31.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: cbaad5;" text="Next" textAlignment="CENTER" textFill="WHITE">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <HBox.margin>
+                                    <Insets top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </center>
+         <left>
+            <Pane prefHeight="393.0" prefWidth="294.0" BorderPane.alignment="CENTER" />
+         </left>
+         <bottom>
+            <Pane prefHeight="107.0" prefWidth="930.0" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

@@ -27,7 +27,7 @@ public class Execute extends Application {
         Translated.get_instance().setTraslated(XMLManager.readXML(Translated.get_instance().getTraslated(),"Language.xml"));
         this.stage=stage;
         this.stage.getIcons().add(new Image("com/luishidalgoa/Nexa/static/images/Logo.png"));
-        scene = new Scene(loadFXML("Home"), 930, 620);
+        scene = new Scene(loadFXML("Login"), 930, 620);
 
         scene.getRoot();
 
@@ -52,7 +52,7 @@ public class Execute extends Application {
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/"+fxml + ".fxml"));
         Parent parent=fxmlLoader.load();
-        if (mainController==null){
+        if (mainController==null && fxmlLoader.getController() instanceof HomeController){
             mainController=fxmlLoader.getController();
         }
         return parent;
@@ -61,5 +61,7 @@ public class Execute extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    //Dividir setRoot y LoadFXML en 2. primero inicializamos y luego cargamos
 
 }

@@ -52,10 +52,9 @@ public class LoginController implements Initializable {
             if(user==null){
                 Label_login_error.setText("the username or password are incorrect");
             }else{
+                Execute.setUser_logged(user);
                 FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/Home.fxml"));
                 Parent parent=fxmlLoader.load();
-                Execute.setMainController(fxmlLoader.getController());
-                Execute.getMainController().setData(user);
 
                 Execute.setRoot(parent);
             }

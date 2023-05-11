@@ -6,10 +6,7 @@ import com.luishidalgoa.Nexa.Model.DAO.Publications.LikeDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.ShareDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
-import com.luishidalgoa.Nexa.Model.DTO.HashMapSerializable;
-import com.luishidalgoa.Nexa.Model.DTO.PublicationDTO;
-import com.luishidalgoa.Nexa.Model.DTO.Translated;
-import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
+import com.luishidalgoa.Nexa.Model.DTO.*;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Like;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Share;
 import com.luishidalgoa.Nexa.Model.Enum.Language;
@@ -19,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -44,11 +43,13 @@ public class PublicationController implements Initializable, iPublicationControl
     private Button update;
     private PublicationDTO p=new PublicationDTO();
     private UserDTO user;
+    @FXML
+    private ImageView perfil;
     private final static java.util.logging.Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.PublicationController");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Check Publication controller");
+        JavaFXStyleDTO.Rounded(perfil, 40);
     }
 
     /**
@@ -155,7 +156,7 @@ public class PublicationController implements Initializable, iPublicationControl
     public void deleted(){
         try {
             if(PublicationDAO.getInstance().delete(this.p.getPublication().getId())){
-                Execute.mainController.updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
+                Execute.getMainController().updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE,e.getMessage());
@@ -174,7 +175,7 @@ public class PublicationController implements Initializable, iPublicationControl
     public void update(){
         try {
             PublicationDAO.getInstance().update(p,TextArea_Text.getText());
-            Execute.mainController.updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
+            Execute.getMainController().updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
         } catch (SQLException e) {
             logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);

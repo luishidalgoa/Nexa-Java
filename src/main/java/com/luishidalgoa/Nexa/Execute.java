@@ -1,7 +1,8 @@
 package com.luishidalgoa.Nexa;
 
-import com.luishidalgoa.Nexa.Controller.HomeController;
+import com.luishidalgoa.Nexa.Abstracts.Controller;
 import com.luishidalgoa.Nexa.Model.DTO.Translated;
+import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
 import com.luishidalgoa.Nexa.Utils.XMLManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,9 +19,9 @@ import java.io.IOException;
 public class Execute extends Application {
 
     private static Scene scene;
-    private static HomeController mainController;
+    private static Controller mainController;
     private static Stage stage;
-   // public static
+    private static UserDTO user_logged;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -55,16 +56,24 @@ public class Execute extends Application {
         return parent;
     }
 
-    public static HomeController getMainController() {
+    public static Controller getMainController() {
         return mainController;
     }
 
-    public static void setMainController(HomeController mainController) {
+    public static void setMainController(Controller mainController) {
         Execute.mainController = mainController;
     }
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static UserDTO getUser_logged() {
+        return user_logged;
+    }
+
+    public static void setUser_logged(UserDTO u) {
+        user_logged = u;
     }
 
     //Dividir setRoot y LoadFXML en 2. primero inicializamos y luego cargamos

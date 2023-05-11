@@ -6,6 +6,7 @@ import com.luishidalgoa.Nexa.Model.DAO.Publications.LikeDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.ShareDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
+import com.luishidalgoa.Nexa.Model.DTO.HashMapSerializable;
 import com.luishidalgoa.Nexa.Model.DTO.PublicationDTO;
 import com.luishidalgoa.Nexa.Model.DTO.Translated;
 import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
@@ -14,6 +15,7 @@ import com.luishidalgoa.Nexa.Model.Domain.Publications.Share;
 import com.luishidalgoa.Nexa.Model.Enum.Language;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
@@ -38,6 +40,8 @@ public class PublicationController implements Initializable, iPublicationControl
     private Label label_UserName;
     @FXML
     MenuButton Menu_options;
+    @FXML
+    private Button update;
     private PublicationDTO p=new PublicationDTO();
     private UserDTO user;
     private final static java.util.logging.Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.PublicationController");
@@ -55,8 +59,9 @@ public class PublicationController implements Initializable, iPublicationControl
         try {
             //Buscamos el idioma en la configuracion del usuario
             Language language= Objects.requireNonNull(User_optionsDAO.get_instance().FindLanguage(user.getUser_name())).getLanguage();
-            Menu_options.setText(Translated.get_instance().getTraslated().map.get(language.name())
-                    .map.get("Publication_Menu_options"));//buscamos la clave del objeto traducido en el mapa del idioma
+            HashMapSerializable<String, String> aux=Translated.get_instance().getTraslated().map.get(language.name());
+            Menu_options.setText(aux.map.get("Publication_Menu_options"));//buscamos la clave del objeto traducido en el mapa del idioma
+            update.setText(aux.map.get("Publication_Update"));
         } catch (SQLException e) {
             logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);
@@ -150,8 +155,26 @@ public class PublicationController implements Initializable, iPublicationControl
     public void deleted(){
         try {
             if(PublicationDAO.getInstance().delete(this.p.getPublication().getId())){
-                Execute.mainController.updatePublicationPanel();
+                Execute.mainController.updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
             }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE,e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateOpt(){
+        TextArea_Text.setEditable(true);
+        update.setVisible(true);
+    }
+
+    /**
+     * Este  metodo sera ejecutado cuando se confirmen los cambios en la vista de la publicacion. de modo que se
+     * actualizara la publicacion
+     */
+    public void update(){
+        try {
+            PublicationDAO.getInstance().update(p,TextArea_Text.getText());
+            Execute.mainController.updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
         } catch (SQLException e) {
             logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);

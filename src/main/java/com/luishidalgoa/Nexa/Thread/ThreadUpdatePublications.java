@@ -32,7 +32,7 @@ public class ThreadUpdatePublications extends Thread{
             while (true){
                 if(Objects.requireNonNull(PublicationDAO.getInstance().findAll()).size()!=PublicationsCount){
                     PublicationsCount= Objects.requireNonNull(PublicationDAO.getInstance().findAll()).size();
-                    Platform.runLater(() -> ((HomeController)Controller).updatePublicationPanel()); //LAMBDA
+                    Platform.runLater(() -> ((HomeController)Controller).showUpdate()); //LAMBDA
                     logger.log(Level.INFO,"Ok. The thread updated");
                 }
                 Thread.sleep(5000);
@@ -45,5 +45,9 @@ public class ThreadUpdatePublications extends Thread{
             logger.log(Level.SEVERE,"ERROR. Had ocurred some error on the sql server "+ e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    public void setPublicationsCount(int publicationsCount) {
+        PublicationsCount = publicationsCount;
     }
 }

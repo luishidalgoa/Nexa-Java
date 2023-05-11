@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -38,7 +40,7 @@
             <MenuButton fx:id="Menu_options" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Options">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#deleted" text="Delete" />
-                <MenuItem mnemonicParsing="false" text="Update" />
+                <MenuItem mnemonicParsing="false" onAction="#updateOpt" text="Update" />
               </items>
                <HBox.margin>
                   <Insets top="10.0" />
@@ -97,6 +99,14 @@
                   </ImageView>
                </children>
             </HBox>
+            <Button fx:id="update" mnemonicParsing="false" onAction="#update" prefHeight="25.0" prefWidth="70.0" text="Update" visible="false">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </HBox>
    </children>

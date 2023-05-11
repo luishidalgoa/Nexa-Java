@@ -1,7 +1,7 @@
 package com.luishidalgoa.Nexa.Controller;
 
+import com.luishidalgoa.Nexa.Abstracts.Controller;
 import com.luishidalgoa.Nexa.Execute;
-import com.luishidalgoa.Nexa.Interfaces.iControllers.iControllerHome;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
@@ -11,7 +11,6 @@ import com.luishidalgoa.Nexa.Model.DTO.Translated;
 import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Publication;
 import com.luishidalgoa.Nexa.Thread.ThreadUpdatePublications;
-import com.luishidalgoa.Nexa.Utils.Login;
 import com.luishidalgoa.Nexa.Utils.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +27,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
 
-public class HomeController implements Initializable, iControllerHome  {
+public class HomeController extends Controller implements Initializable{
     @FXML
     private TextArea textField_post;
     @FXML
@@ -55,9 +54,11 @@ public class HomeController implements Initializable, iControllerHome  {
     private Button Home_ShowMore;
     @FXML
     private Label Home_Suggestions;
+    VBox update;
     //-------------------------------
     private UserDTO user_logged;
     PublicationDAO publicationDAO = PublicationDAO.getInstance();
+    ThreadUpdatePublications threadUpdatePublications;
     private final static java.util.logging.Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.HomeController");
 
     public HomeController() {
@@ -65,17 +66,29 @@ public class HomeController implements Initializable, iControllerHome  {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Check Home controller");
-        user_logged= Login.Sing_in("Luis","1234");
-        label_userName.setText(user_logged.getUser_name());
-        updatePublicationPanel();
-        suggestion_panel();
-        UpdateLanguage();
+        update= (VBox) vBox_publications.getChildren().get(0);
 
-        ThreadUpdatePublications threadUpdatePublications=new ThreadUpdatePublications(this);
-        threadUpdatePublications.start();
     }
 
+    /**
+     * Metodo que una vez iniializado la clase Controller. sera utilizada para construir el usuario y otros requisitos
+     * elementales para el correcto funcionamiento
+     * @param u dd
+     */
+    public void setData(UserDTO u){
+        try {
+            this.user_logged=u;
+            label_userName.setText(user_logged.getUser_name());
+            updatePublicationPanel();
+            suggestion_panel();
+            UpdateLanguage();
+
+            threadUpdatePublications=new ThreadUpdatePublications(this);
+            threadUpdatePublications.start();
+        }catch (Exception e){
+            logger.log(Level.SEVERE,e.getMessage());
+        }
+    }
     /**
      * Este metodo en primera instancia buscara una coleccion de usuarios para posteriormente iterar la coleccion e
      * inicializar una vista de la misma incluido su controller. Posteriormente insertaremos el nodo dentro del container
@@ -108,9 +121,12 @@ public class HomeController implements Initializable, iControllerHome  {
      * de nuestro HomeController
      */
     public void updatePublicationPanel() {
-        if (vBox_publications.getChildren().size() > 2) {
+        if(((VBox)vBox_publications.getChildren().get(0)).getChildren().get(1).getId().equals(update.getChildren().get(1).getId())){//borramos el elemento update
+            vBox_publications.getChildren().remove(0);
+        }
+        if (vBox_publications.getChildren().size() > 1) {
 //limpiaremos toda la vista de una porccion de nuestro vbox_publication. Porque queremos preservar los 2 elementos principales
-            vBox_publications.getChildren().subList(2, vBox_publications.getChildren().size()).clear();
+            vBox_publications.getChildren().subList(1, vBox_publications.getChildren().size()).clear();
         }
         Set<PublicationDTO> publications = getAllPublications();
         if (!publications.isEmpty()) {
@@ -140,7 +156,7 @@ public class HomeController implements Initializable, iControllerHome  {
         try {
             if (textField_post.getText().length() > 0 && textField_post.getText().length() <= 255) {
                 PublicationDAO.getInstance().save(new Publication(textField_post.getText(), user_logged));
-                Execute.mainController.updatePublicationPanel();
+                Execute.getMainController().updatePublicationPanel();
             } else {
                 logger.log(Level.WARNING,"WARNING. The Publication hasn´t been saved. its very short");
                 label_message_post.setText("The Publication is very Short");
@@ -188,8 +204,24 @@ public class HomeController implements Initializable, iControllerHome  {
             throw new RuntimeException(e);
         }
     }
-    public void switchPerfil(){
 
+    @Override
+    public void Home() {
+
+    }
+
+    @Override
+    public void Collection() {
+
+    }
+
+    @Override
+    public void Message() {
+
+    }
+
+    public void Perfil(){
+        threadUpdatePublications.interrupt();
     }
 
     /**
@@ -213,7 +245,6 @@ public class HomeController implements Initializable, iControllerHome  {
             throw new RuntimeException(e);
         }
     }
-
     public void optionPanel() throws IOException {
         Execute.newStage("optionsPanel");
     }
@@ -224,4 +255,12 @@ public class HomeController implements Initializable, iControllerHome  {
     public void setUser_logged(UserDTO user_logged) {
         this.user_logged = user_logged;
     }
+
+    /**
+     * Metodo ejecutado desde el hilo ThreadUpdate . Mostrara el boton actualizar en la escena
+     */
+    public void showUpdate(){
+        vBox_publications.getChildren().add(0,update);
+    }
+
 }

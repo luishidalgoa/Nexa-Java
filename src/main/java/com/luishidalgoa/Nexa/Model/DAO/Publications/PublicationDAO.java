@@ -128,6 +128,24 @@ public final class PublicationDAO implements iPublicationDAO {
         }
     }
 
+    /**
+     * Actualiara el texto de la publicacion. para posteriormente validar la actualizacion en la bbdd
+     * @param aux publicacion actualizada
+     * @return dd
+     * @throws SQLException dd
+     */
+    @Override
+    public boolean update(PublicationDTO aux,String text) throws SQLException {
+        PreparedStatement p= this.con.prepareStatement("CALL nexadatabase.PublicationUpdate(?,?)");
+        p.setInt(1,aux.getPublication().getId());
+        p.setString(2,text);
+        p.executeUpdate();
+        if(!findById(aux.getPublication().getId()).getPublication().getText().equals(aux.getPublication().getText())){
+            logger.log(Level.WARNING, "could not update post");
+            return false;
+        }
+        return true;
+    }
     public static PublicationDAO getInstance() {
         if (_instance == null) {
             _instance = new PublicationDAO();

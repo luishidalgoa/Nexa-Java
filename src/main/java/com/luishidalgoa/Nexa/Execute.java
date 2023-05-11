@@ -18,7 +18,7 @@ import java.io.IOException;
 public class Execute extends Application {
 
     private static Scene scene;
-    public static HomeController mainController;
+    private static HomeController mainController;
     private static Stage stage;
    // public static
 
@@ -37,8 +37,8 @@ public class Execute extends Application {
         this.stage.show();
     }
 
-    public static void setRoot(String nameScene) throws IOException {
-        scene.setRoot(loadFXML(nameScene));
+    public static void setRoot(Parent p) throws IOException {
+        scene.setRoot(p);
         stage.setScene(scene);
         stage.show();
     }
@@ -49,13 +49,18 @@ public class Execute extends Application {
         stage2.setScene(scene2);
         stage2.show();
     }
-    private static Parent loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/"+fxml + ".fxml"));
         Parent parent=fxmlLoader.load();
-        if (mainController==null && fxmlLoader.getController() instanceof HomeController){
-            mainController=fxmlLoader.getController();
-        }
         return parent;
+    }
+
+    public static HomeController getMainController() {
+        return mainController;
+    }
+
+    public static void setMainController(HomeController mainController) {
+        Execute.mainController = mainController;
     }
 
     public static void main(String[] args) {

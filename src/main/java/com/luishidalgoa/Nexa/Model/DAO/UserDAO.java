@@ -121,7 +121,7 @@ public class UserDAO implements iUserDAO{
      * @throws SQLException dd
      */
     public UserDTO signIn(String username, String password) throws SQLException {
-        if(findUser(username).getPassword().equals(password)){
+        if(findUser(username)!=null && findUser(username).getPassword().equals(password)){
             return searchUser(username);
         }
         logger.log(Level.SEVERE,"Couldn´t sing in with the user count "+username);

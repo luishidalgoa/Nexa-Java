@@ -5,7 +5,9 @@ import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
 import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
 import com.luishidalgoa.Nexa.Utils.Login;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -26,7 +28,6 @@ public class LoginController implements Initializable {
     private Label Label_login_error;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Check login controller");
         TextField_user_name.textProperty().addListener(observable -> { //Realmente esto no deberia implementarse por seguridad
             try {
                 if(UserDAO.getInstance().searchUser(TextField_user_name.getText())==null){
@@ -51,8 +52,12 @@ public class LoginController implements Initializable {
             if(user==null){
                 Label_login_error.setText("the username or password are incorrect");
             }else{
-                Execute.setRoot("Home");
-                Execute.mainController.setUser_logged(user);
+                FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/Home.fxml"));
+                Parent parent=fxmlLoader.load();
+                Execute.setMainController(fxmlLoader.getController());
+                Execute.getMainController().setData(user);
+
+                Execute.setRoot(parent);
             }
         }else{
             Label_login_error.setText("you should fill out the fields");

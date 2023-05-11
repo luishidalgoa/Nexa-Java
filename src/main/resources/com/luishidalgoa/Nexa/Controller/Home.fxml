@@ -39,10 +39,10 @@
                   </ImageView>
                </children>
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="80.0" />
                </HBox.margin>
             </HBox>
-            <Pane prefHeight="65.0" prefWidth="637.0" />
+            <Pane prefHeight="65.0" prefWidth="489.0" />
             <GridPane prefHeight="65.0" prefWidth="201.0" style="-fx-background-radius: 50; -fx-background-radius: 50;">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.33334350585938" minWidth="10.0" prefWidth="49.666656494140625" />
@@ -147,7 +147,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox layoutX="10.0" layoutY="110.0" onMouseClicked="#switchPerfil" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
+            <HBox layoutX="10.0" layoutY="110.0" onMouseClicked="#Perfil" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -211,10 +211,10 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                      <children>
-                        <VBox opacity="0.8" prefHeight="43.0" prefWidth="268.0" style="-fx-background-color: white;">
+                        <VBox opacity="0.8" prefHeight="43.0" prefWidth="268.0">
                            <children>
                               <Separator prefWidth="200.0" style="-fx-background-color: #19aeff;" />
-                              <Button fx:id="Home_ShowMore" mnemonicParsing="false" onAction="#updatePublicationPanel" opacity="0.8" prefHeight="43.0" prefWidth="275.0" style="-fx-background-color: white;" text="Show more..." textFill="#19aeff">
+                              <Button fx:id="Home_ShowMore" mnemonicParsing="false" onAction="#updatePublicationPanel" opacity="0.8" prefHeight="43.0" prefWidth="275.0" style="-fx-background-color: unset;" text="Show more..." textFill="#19aeff">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

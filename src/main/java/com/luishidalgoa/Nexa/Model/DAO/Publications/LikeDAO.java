@@ -41,7 +41,7 @@ public final class LikeDAO implements iLikeDAO {
             p.setString(2, user_name);
             p.executeUpdate();
             if (findLike(id_publication, user_name) != null) {
-                logger.log(Level.WARNING,"WARNING. The Like hasn´t been deleted");
+                logger.log(Level.WARNING,"WARNING. The Like with id publication: "+id_publication+" and username liked: "+user_name+" hasn´t been deleted");
                 return false;
             }
         }else{
@@ -92,7 +92,7 @@ public final class LikeDAO implements iLikeDAO {
      */
     @Override
     public Like findLike(int id_publication, String user_name) throws SQLException {
-        PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikeFindLike`(?,?)");
+        PreparedStatement p = this.con.prepareStatement(/*"CALL nexadatabase.`LikeFindLike`(?,?)"*/"Select * from nexadatabase.likes where id_publication in(select id from nexadatabase.publication where id=?) and user_name LIKE(select user_name from nexadatabase.user where user_name like ?) group by id;");
         p.setInt(1, id_publication);
         p.setString(2, user_name);
         ResultSet set = p.executeQuery();

@@ -110,7 +110,7 @@ public class PerfilController extends Controller implements Initializable {
 //limpiaremos toda la vista de una porccion de nuestro vbox_publication. Porque queremos preservar los 2 elementos principales
             vBox_publications.getChildren().subList(1, vBox_publications.getChildren().size()).clear();
         }
-        Set<PublicationDTO> publications = getUserPublications();
+        Set<PublicationDTO> publications = orderByDate();
         if (!publications.isEmpty()) {
             for (PublicationDTO aux : publications) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("publication.fxml"));
@@ -129,7 +129,7 @@ public class PerfilController extends Controller implements Initializable {
             logger.log(Level.WARNING,"WARNING. the list Publications of the function: getAllPublications() is empty");
         }
     }
-    private Set<PublicationDTO> getUserPublications(){
+    private Set<PublicationDTO> orderByDate(){
         try {
             Set<PublicationDTO>publications= publicationDAO.findAll();
             publications= Utils.orderByTime(publications);

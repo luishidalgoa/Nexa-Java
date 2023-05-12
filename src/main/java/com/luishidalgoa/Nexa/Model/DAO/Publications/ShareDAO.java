@@ -3,6 +3,7 @@ package com.luishidalgoa.Nexa.Model.DAO.Publications;
 import com.luishidalgoa.Nexa.Interfaces.iDAOS.iShareDAO;
 import com.luishidalgoa.Nexa.Model.Connections.ConnectionMySQL;
 import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
+import com.luishidalgoa.Nexa.Model.DTO.PublicationDTO;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Share;
 
 import java.sql.Connection;
@@ -42,11 +43,11 @@ public final class ShareDAO implements iShareDAO {
             p.setString(2, user_name);
             p.executeUpdate();
             if (findShare(id_publication, user_name) != null) {
-                logger.log(Level.SEVERE,"WARNING. couldn´t delete post. The post with id "+ id_publication +" and username "+user_name+" hasn´t could delete");
+                logger.log(Level.SEVERE,"WARNING. couldn´t delete post. The post with id "+ id_publication +" and username shared "+user_name+" hasn´t could delete");
                 return false;
             }
         }else{
-            logger.log(Level.WARNING, "WARNING. The publication share with id "+id_publication+ "and username "+ user_name+" Hasn´t could found");
+            logger.log(Level.WARNING, "WARNING. The publication share with id "+id_publication+ "and username shared"+ user_name+" Hasn´t could found");
             return false;
         }
         return true;
@@ -102,7 +103,7 @@ public final class ShareDAO implements iShareDAO {
      */
     @Override
     public Share findShare(int id_publication, String user_name) throws SQLException {
-        PreparedStatement p = this.con.prepareStatement("call nexadatabase.ShareFindLike(?,?)");
+        PreparedStatement p = this.con.prepareStatement("call nexadatabase.ShareFindShare(?,?)");
         p.setInt(1, id_publication);
         p.setString(2, user_name);
         ResultSet set = p.executeQuery();
@@ -116,6 +117,22 @@ public final class ShareDAO implements iShareDAO {
             result = null;
         }
         return result;
+    }
+
+    @Override
+    public Set<PublicationDTO> findByUser(String username) throws SQLException {
+        PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.ShareFindByUser(?)");
+        p.setString(1,username);
+        ResultSet set= p.executeQuery();
+        Set<PublicationDTO> result = new HashSet<>();
+        while (set.next()){
+            PublicationDTO aux= PublicationDAO.getInstance().findById(set.getInt("id"));
+            result.add(aux);
+        }
+        if(!result.isEmpty()){
+            return result;
+        }
+        return null;
     }
 
     /**

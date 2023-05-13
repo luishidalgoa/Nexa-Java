@@ -6,10 +6,7 @@ import com.luishidalgoa.Nexa.Model.DAO.Publications.LikeDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.ShareDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
-import com.luishidalgoa.Nexa.Model.DTO.HashMapSerializable;
-import com.luishidalgoa.Nexa.Model.DTO.PublicationDTO;
-import com.luishidalgoa.Nexa.Model.DTO.Translated;
-import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
+import com.luishidalgoa.Nexa.Model.DTO.*;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Like;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Share;
 import com.luishidalgoa.Nexa.Model.Enum.Language;
@@ -19,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -43,12 +42,13 @@ public class PublicationController implements Initializable, iPublicationControl
     @FXML
     private Button update;
     private PublicationDTO p=new PublicationDTO();
-    private UserDTO user;
+    @FXML
+    private ImageView perfil;
     private final static java.util.logging.Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.PublicationController");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Check Publication controller");
+        JavaFXStyleDTO.Rounded(perfil, 40);
     }
 
     /**
@@ -58,7 +58,7 @@ public class PublicationController implements Initializable, iPublicationControl
     public void UpdateLanguage() {
         try {
             //Buscamos el idioma en la configuracion del usuario
-            Language language= Objects.requireNonNull(User_optionsDAO.get_instance().FindLanguage(user.getUser_name())).getLanguage();
+            Language language= Objects.requireNonNull(User_optionsDAO.get_instance().FindLanguage(Execute.getUser_logged().getUser_name())).getLanguage();
             HashMapSerializable<String, String> aux=Translated.get_instance().getTraslated().map.get(language.name());
             Menu_options.setText(aux.map.get("Publication_Menu_options"));//buscamos la clave del objeto traducido en el mapa del idioma
             update.setText(aux.map.get("Publication_Update"));
@@ -79,7 +79,6 @@ public class PublicationController implements Initializable, iPublicationControl
         try {
             if(u!=null && p!=null){
                 this.p=p;
-                this.user=u;
                 UpdateLanguage();
                 this.Label_Date.setText(p.getBeetwenDate());
                 this.Label_LikeCount.setText(String.valueOf(LikeDAO.get_instance().findById(p.getPublication().getId()).size()));
@@ -102,11 +101,11 @@ public class PublicationController implements Initializable, iPublicationControl
     @Override
     public void Liked(){
         try {
-            if(LikeDAO.get_instance().findLike(p.getPublication().getId(),user.getUser_name())!=null){
-                LikeDAO.get_instance().delete(p.getPublication().getId(),user.getUser_name());
+            if(LikeDAO.get_instance().findLike(p.getPublication().getId(),Execute.getUser_logged().getUser_name())!=null){
+                LikeDAO.get_instance().delete(p.getPublication().getId(),Execute.getUser_logged().getUser_name());
                 Label_LikeCount.setText(String.valueOf(Integer.parseInt(Label_LikeCount.getText())-1));
             }else {
-                LikeDAO.get_instance().save(new Like(p.getPublication(),user));
+                LikeDAO.get_instance().save(new Like(p.getPublication(),Execute.getUser_logged()));
                 Label_LikeCount.setText(String.valueOf(Integer.parseInt(Label_LikeCount.getText())+1));
             }
 
@@ -123,11 +122,11 @@ public class PublicationController implements Initializable, iPublicationControl
     @Override
     public void shared(){
         try {
-            if(ShareDAO.get_instance().findShare(p.getPublication().getId(),user.getUser_name())!=null){
-                ShareDAO.get_instance().delete(p.getPublication().getId(),user.getUser_name());
+            if(ShareDAO.get_instance().findShare(p.getPublication().getId(),Execute.getUser_logged().getUser_name())!=null){
+                ShareDAO.get_instance().delete(p.getPublication().getId(),Execute.getUser_logged().getUser_name());
                 Label_ShareCount.setText(String.valueOf(Integer.parseInt(Label_ShareCount.getText())-1));
             }else {
-                ShareDAO.get_instance().save(new Share(p.getPublication(),user));
+                ShareDAO.get_instance().save(new Share(p.getPublication(),Execute.getUser_logged()));
                 Label_ShareCount.setText(String.valueOf(Integer.parseInt(Label_ShareCount.getText())+1));
             }
 
@@ -143,7 +142,7 @@ public class PublicationController implements Initializable, iPublicationControl
      */
     @Override
     public void optionsAvalaible(){
-        if(!p.publication.getUser().getUser_name().equals(user.getUser_name())){
+        if(!p.publication.getUser().getUser_name().equals(Execute.getUser_logged().getUser_name())){
             this.Menu_options.setVisible(false);
         }
     }
@@ -155,7 +154,7 @@ public class PublicationController implements Initializable, iPublicationControl
     public void deleted(){
         try {
             if(PublicationDAO.getInstance().delete(this.p.getPublication().getId())){
-                Execute.mainController.updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
+                Execute.getMainController().updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE,e.getMessage());
@@ -174,10 +173,26 @@ public class PublicationController implements Initializable, iPublicationControl
     public void update(){
         try {
             PublicationDAO.getInstance().update(p,TextArea_Text.getText());
-            Execute.mainController.updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
+            Execute.getMainController().updatePublicationPanel(); //ACTUALIZAR CUANDO CREE EL PERFIL USUARIO
         } catch (SQLException e) {
             logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    public Label getLabel_LikeCount() {
+        return Label_LikeCount;
+    }
+
+    public void setLabel_LikeCount(Label label_LikeCount) {
+        Label_LikeCount = label_LikeCount;
+    }
+
+    public Label getLabel_ShareCount() {
+        return Label_ShareCount;
+    }
+
+    public void setLabel_ShareCount(Label label_ShareCount) {
+        Label_ShareCount = label_ShareCount;
     }
 }

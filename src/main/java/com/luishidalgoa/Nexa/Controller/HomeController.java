@@ -5,10 +5,7 @@ import com.luishidalgoa.Nexa.Execute;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
-import com.luishidalgoa.Nexa.Model.DTO.HashMapSerializable;
-import com.luishidalgoa.Nexa.Model.DTO.PublicationDTO;
-import com.luishidalgoa.Nexa.Model.DTO.Translated;
-import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
+import com.luishidalgoa.Nexa.Model.DTO.*;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Publication;
 import com.luishidalgoa.Nexa.Thread.ThreadUpdatePublications;
 import com.luishidalgoa.Nexa.Utils.Utils;
@@ -19,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -54,9 +52,12 @@ public class HomeController extends Controller implements Initializable{
     private Button Home_ShowMore;
     @FXML
     private Label Home_Suggestions;
+    @FXML
+    private ImageView perfil;
+    @FXML
+    private ImageView perfil1;
     VBox update;
     //-------------------------------
-    private UserDTO user_logged;
     PublicationDAO publicationDAO = PublicationDAO.getInstance();
     ThreadUpdatePublications threadUpdatePublications;
     private final static java.util.logging.Logger logger= com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.HomeController");
@@ -66,19 +67,20 @@ public class HomeController extends Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Execute.setMainController(this);
         update= (VBox) vBox_publications.getChildren().get(0);
-
+        JavaFXStyleDTO.Rounded(perfil,50);
+        JavaFXStyleDTO.Rounded(perfil1,60);
+        setData();
     }
 
     /**
      * Metodo que una vez iniializado la clase Controller. sera utilizada para construir el usuario y otros requisitos
-     * elementales para el correcto funcionamiento
-     * @param u dd
+     * elementales para el correcto funcionamiento.
      */
-    public void setData(UserDTO u){
+    public void setData(){
         try {
-            this.user_logged=u;
-            label_userName.setText(user_logged.getUser_name());
+            label_userName.setText(Execute.getUser_logged().getUser_name());
             updatePublicationPanel();
             suggestion_panel();
             UpdateLanguage();
@@ -94,6 +96,7 @@ public class HomeController extends Controller implements Initializable{
      * inicializar una vista de la misma incluido su controller. Posteriormente insertaremos el nodo dentro del container
      * de nuestro HomeController
      */
+    @Override
     public void suggestion_panel() {
         Set<UserDTO> users = getRecommendUsers();
         if (!users.isEmpty()) {
@@ -112,6 +115,29 @@ public class HomeController extends Controller implements Initializable{
             }
         }else{
             logger.log(Level.WARNING,"WARNING. the list RecommendUsers of the function: getRecommendUsers() is empty");
+        }
+    }
+    /**
+     * El proposito de este metodo es extraer todos los usuarios de la bbdd
+     * Este metodo esta pensado para ser utilizado en el metodo Suggestion_Panel()
+     * @return dd
+     */
+    @Override
+    public Set<UserDTO> getRecommendUsers() {
+        try {
+            Set<UserDTO> result = new HashSet<>();
+            Set<UserDTO> users = UserDAO.getInstance().findAll();
+            Iterator<UserDTO> it = users.iterator();
+            int i = 0;
+            while (it.hasNext() && i <= 3) {
+                UserDTO aux = it.next();
+                result.add(aux);
+                i++;
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE,e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -136,7 +162,7 @@ public class HomeController extends Controller implements Initializable{
                     Node card = fxmlLoader.load();
 
                     PublicationController publicationController = fxmlLoader.getController();
-                    publicationController.setData(user_logged, aux);
+                    publicationController.setData(Execute.getUser_logged(), aux);
                     vBox_publications.getChildren().add(card);
                 } catch (IOException e) {
                     logger.log(Level.SEVERE,e.getMessage());
@@ -155,8 +181,8 @@ public class HomeController extends Controller implements Initializable{
     public void post() {
         try {
             if (textField_post.getText().length() > 0 && textField_post.getText().length() <= 255) {
-                PublicationDAO.getInstance().save(new Publication(textField_post.getText(), user_logged));
-                Execute.getMainController().updatePublicationPanel();
+                PublicationDAO.getInstance().save(new Publication(textField_post.getText(), Execute.getUser_logged()));
+                updatePublicationPanel();
             } else {
                 logger.log(Level.WARNING,"WARNING. The Publication hasn´t been saved. its very short");
                 label_message_post.setText("The Publication is very Short");
@@ -182,45 +208,26 @@ public class HomeController extends Controller implements Initializable{
             throw new RuntimeException(e);
         }
     }
-    /**
-     * El proposito de este metodo es extraer todos los usuarios de la bbdd
-     * Este metodo esta pensado para ser utilizado en el metodo Suggestion_Panel()
-     * @return dd
-     */
-    private Set<UserDTO> getRecommendUsers() {
-        try {
-            Set<UserDTO> result = new HashSet<>();
-            Set<UserDTO> users = UserDAO.getInstance().findAll();
-            Iterator<UserDTO> it = users.iterator();
-            int i = 0;
-            while (it.hasNext() && i <= 3) {
-                UserDTO aux = it.next();
-                result.add(aux);
-                i++;
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE,e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
-    public void Home() {
-
-    }
+    public void Home() {updatePublicationPanel();}
 
     @Override
     public void Collection() {
-
+        threadUpdatePublications.interrupt();
     }
 
     @Override
     public void Message() {
-
+        threadUpdatePublications.interrupt();
     }
 
     public void Perfil(){
+        try {
+            Execute.setRoot(Execute.loadFXML("Perfil"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         threadUpdatePublications.interrupt();
     }
 
@@ -230,7 +237,7 @@ public class HomeController extends Controller implements Initializable{
     public void UpdateLanguage() {
         try {
             //Buscamos el idioma en la configuracion del usuario
-            String language= Objects.requireNonNull(User_optionsDAO.get_instance().FindLanguage(user_logged.getUser_name())).getLanguage().name();
+            String language= Objects.requireNonNull(User_optionsDAO.get_instance().FindLanguage(Execute.getUser_logged().getUser_name())).getLanguage().name();
             HashMapSerializable<String,String>translated= Translated.get_instance().getTraslated().map.get(language);
             Home_Home.setText(translated.map.get("Home_Home")); //buscamos la clave del objeto traducido en el mapa del idioma
             Home_Collections.setText(translated.map.get("Home_Collections"));
@@ -245,16 +252,6 @@ public class HomeController extends Controller implements Initializable{
             throw new RuntimeException(e);
         }
     }
-    public void optionPanel() throws IOException {
-        Execute.newStage("optionsPanel");
-    }
-    public UserDTO getUser_logged() {
-        return user_logged;
-    }
-
-    public void setUser_logged(UserDTO user_logged) {
-        this.user_logged = user_logged;
-    }
 
     /**
      * Metodo ejecutado desde el hilo ThreadUpdate . Mostrara el boton actualizar en la escena
@@ -262,5 +259,7 @@ public class HomeController extends Controller implements Initializable{
     public void showUpdate(){
         vBox_publications.getChildren().add(0,update);
     }
-
+    public void optionPanel() throws IOException {
+        Execute.newStage("optionsPanel");
+    }
 }

@@ -26,7 +26,7 @@ public class OptionsPanel implements Initializable, iOptionsPanel {
     @FXML
     public void handleEN(ActionEvent event) {
         try {
-            User_optionsDAO.get_instance().updateLanguage(Execute.getMainController().getUser_logged().getUser_name(), Language.EN.name());
+            User_optionsDAO.get_instance().updateLanguage(Execute.getUser_logged().getUser_name(), Language.EN.name());
             Execute.getMainController().UpdateLanguage();
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());
@@ -44,7 +44,7 @@ public class OptionsPanel implements Initializable, iOptionsPanel {
     @FXML
     public void handleES(ActionEvent event) {
         try {
-            User_optionsDAO.get_instance().updateLanguage(Execute.getMainController().getUser_logged().getUser_name(), Language.ES.name());
+            User_optionsDAO.get_instance().updateLanguage(Execute.getUser_logged().getUser_name(), Language.ES.name());
             Execute.getMainController().UpdateLanguage();
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());

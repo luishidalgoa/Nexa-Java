@@ -109,7 +109,7 @@
                                  <children>
                                     <Label fx:id="Label_login_error" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="1.0" prefHeight="41.0" prefWidth="168.0" textFill="RED" />
                                  </children></Pane>
-                              <Button fx:id="btn_login" mnemonicParsing="false" onMouseClicked="#login" prefHeight="31.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: cbaad5;" text="Next" textAlignment="CENTER" textFill="WHITE">
+                              <Button fx:id="btn_login" mnemonicParsing="false" onAction="#login" prefHeight="31.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: cbaad5;" text="Next" textAlignment="CENTER" textFill="WHITE">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>

@@ -7,6 +7,8 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
@@ -20,7 +22,7 @@
          <children>
             <Pane prefHeight="48.0" prefWidth="53.0">
                <children>
-                  <ImageView fitHeight="41.0" fitWidth="40.0" layoutX="7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="perfil" fitHeight="41.0" fitWidth="40.0" layoutX="7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../static/images/users/User.png" />
                      </image>
@@ -37,7 +39,7 @@
                </children>
             </VBox>
             <Pane prefHeight="48.0" prefWidth="32.0" />
-            <MenuButton fx:id="Menu_options" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Options">
+            <MenuButton fx:id="Menu_options" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" style="-fx-background-radius: 20px; -fx-border-color: none; -fx-background-color: cbaad5;" text="Options" textFill="WHITE">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#deleted" text="Delete" />
                 <MenuItem mnemonicParsing="false" onAction="#updateOpt" text="Update" />
@@ -45,6 +47,13 @@
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
+               <effect>
+                  <Lighting diffuseConstant="2.0" light="$null" specularConstant="0.0" specularExponent="0.0" surfaceScale="0.5">
+                     <bumpInput>
+                        <Shadow height="46.31" radius="61.097500000000004" width="200.08" />
+                     </bumpInput>
+                  </Lighting>
+               </effect>
             </MenuButton>
          </children>
       </HBox>

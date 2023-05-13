@@ -41,7 +41,7 @@ public final class LikeDAO implements iLikeDAO {
             p.setString(2, user_name);
             p.executeUpdate();
             if (findLike(id_publication, user_name) != null) {
-                logger.log(Level.WARNING,"WARNING. The Like hasn´t been deleted");
+                logger.log(Level.WARNING,"WARNING. The Like with id publication: "+id_publication+" and username liked: "+user_name+" hasn´t been deleted");
                 return false;
             }
         }else{

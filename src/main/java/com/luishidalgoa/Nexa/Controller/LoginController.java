@@ -28,7 +28,7 @@ public class LoginController implements Initializable {
     private Label Label_login_error;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TextField_user_name.textProperty().addListener(observable -> { //Realmente esto no deberia implementarse por seguridad
+        TextField_user_name.textProperty().addListener(observable -> { //Realmente esto no deberia implementarse por privacidad
             try {
                 if(UserDAO.getInstance().searchUser(TextField_user_name.getText())==null){
                     Label_warningUser.setStyle("-fx-text-fill: red");
@@ -52,10 +52,9 @@ public class LoginController implements Initializable {
             if(user==null){
                 Label_login_error.setText("the username or password are incorrect");
             }else{
+                Execute.setUser_logged(user);
                 FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/Home.fxml"));
                 Parent parent=fxmlLoader.load();
-                Execute.setMainController(fxmlLoader.getController());
-                Execute.getMainController().setData(user);
 
                 Execute.setRoot(parent);
             }

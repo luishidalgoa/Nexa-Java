@@ -170,6 +170,23 @@ public class UserDAO implements iUserDAO{
         return true;
     }
 
+    /**
+     * Actualizara en la base de datos la biografia del usuario
+     * @param username valor dedicado para el nombre del usuario del cual realizaremos la actualizacion
+     * @param value valor del nuevo estado de la biografia del usuario que se desea actualizar
+     * @return devuelve true o false en base si la operacion fue satisfactoria o no
+     */
+    public boolean updateBiography(String username,String value) throws SQLException {
+        PreparedStatement p= this.con.prepareStatement("Call nexadatabase.UserUpdateBiography(?,?)");
+        p.setString(1,username);
+        p.setString(2,value);
+        p.executeUpdate();
+        if(!searchUser(username).getBiography().equals(value)){
+            return false;
+        }
+        return true;
+    }
+
     public static UserDAO getInstance(){
         if(_instance==null){
             _instance= new UserDAO();

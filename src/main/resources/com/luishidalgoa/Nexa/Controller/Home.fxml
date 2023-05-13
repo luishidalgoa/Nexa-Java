@@ -91,7 +91,7 @@
       </HBox>
       <VBox layoutX="81.0" layoutY="96.0" prefHeight="483.0" prefWidth="220.0" spacing="10.0" style="-fx-background-color: ebebeb; -fx-background-radius: 10;" AnchorPane.leftAnchor="81.0">
          <children>
-            <HBox prefHeight="50.0" prefWidth="220.0" spacing="5.0">
+            <HBox onMouseClicked="#Home" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -114,7 +114,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
+            <HBox layoutX="10.0" layoutY="10.0" onMouseClicked="#Collection" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
                <children>
                   <ImageView fitHeight="24.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -134,7 +134,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox layoutX="10.0" layoutY="60.0" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
+            <HBox layoutX="10.0" layoutY="60.0" onMouseClicked="#Message" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -229,7 +229,7 @@
                               <Separator prefWidth="200.0" style="-fx-background-color: #19aeff;" />
                            </children>
                         </VBox>
-                        <VBox opacity="0.8" prefHeight="157.0" prefWidth="271.0" style="-fx-background-radius: 10; -fx-background-color: white;">
+                        <VBox minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="157.0" prefWidth="271.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                            <children>
                               <HBox prefHeight="50.0" prefWidth="120.0">
                                  <VBox.margin>

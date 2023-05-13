@@ -1,8 +1,7 @@
 package com.luishidalgoa.Nexa.Abstracts;
 
-import com.luishidalgoa.Nexa.Execute;
-
-import java.io.IOException;
+import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
+import java.util.Set;
 
 public abstract class Controller {
     public abstract void Home();
@@ -11,4 +10,8 @@ public abstract class Controller {
     public abstract void Perfil();
     public abstract void UpdateLanguage();
     public abstract void updatePublicationPanel();
+    public abstract void suggestion_panel();
+    public abstract Set<UserDTO> getRecommendUsers();
+
+
 }

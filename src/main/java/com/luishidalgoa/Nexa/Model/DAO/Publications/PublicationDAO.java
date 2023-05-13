@@ -86,7 +86,31 @@ public final class PublicationDAO implements iPublicationDAO {
         }
         return result;
     }
-
+    /**
+     * Este metodo buscara una coleccion de publicaciones en base al usuario logueado que lo haya compartido.
+     * ademas de agregar tambien las publicaciones que haya realizado
+     * @param username
+     * @return
+     * @throws SQLException
+     */
+    public Set<PublicationDTO> findBySocial(String username) throws SQLException {
+        PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.PublicationFindBySocial(?)");
+        p.setString(1,username);
+        ResultSet set= p.executeQuery();
+        Set<PublicationDTO> result = new HashSet<>();
+        while (set.next()){
+            Publication aux= new Publication();
+            aux.setId(set.getInt("id"));
+            aux.setText(set.getString("text"));
+            aux.setUser(UserDAO.getInstance().searchUser(set.getString("user_name")));
+            aux.setPublication_date(set.getTimestamp("publication_date"));
+            result.add(new PublicationDTO(aux));
+        }
+        if(!result.isEmpty()){
+            return result;
+        }
+        return null;
+    }
     /**
      * Este metodo buscara una publicacion a partir de su id
      */

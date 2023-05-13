@@ -96,6 +96,7 @@ public class HomeController extends Controller implements Initializable{
      * inicializar una vista de la misma incluido su controller. Posteriormente insertaremos el nodo dentro del container
      * de nuestro HomeController
      */
+    @Override
     public void suggestion_panel() {
         Set<UserDTO> users = getRecommendUsers();
         if (!users.isEmpty()) {
@@ -114,6 +115,29 @@ public class HomeController extends Controller implements Initializable{
             }
         }else{
             logger.log(Level.WARNING,"WARNING. the list RecommendUsers of the function: getRecommendUsers() is empty");
+        }
+    }
+    /**
+     * El proposito de este metodo es extraer todos los usuarios de la bbdd
+     * Este metodo esta pensado para ser utilizado en el metodo Suggestion_Panel()
+     * @return dd
+     */
+    @Override
+    public Set<UserDTO> getRecommendUsers() {
+        try {
+            Set<UserDTO> result = new HashSet<>();
+            Set<UserDTO> users = UserDAO.getInstance().findAll();
+            Iterator<UserDTO> it = users.iterator();
+            int i = 0;
+            while (it.hasNext() && i <= 3) {
+                UserDTO aux = it.next();
+                result.add(aux);
+                i++;
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE,e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -179,28 +203,6 @@ public class HomeController extends Controller implements Initializable{
             Set<PublicationDTO>publications= publicationDAO.findAll();
             publications=Utils.orderByTime(publications);
             return publications;
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE,e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-    /**
-     * El proposito de este metodo es extraer todos los usuarios de la bbdd
-     * Este metodo esta pensado para ser utilizado en el metodo Suggestion_Panel()
-     * @return dd
-     */
-    private Set<UserDTO> getRecommendUsers() {
-        try {
-            Set<UserDTO> result = new HashSet<>();
-            Set<UserDTO> users = UserDAO.getInstance().findAll();
-            Iterator<UserDTO> it = users.iterator();
-            int i = 0;
-            while (it.hasNext() && i <= 3) {
-                UserDTO aux = it.next();
-                result.add(aux);
-                i++;
-            }
-            return result;
         } catch (SQLException e) {
             logger.log(Level.SEVERE,e.getMessage());
             throw new RuntimeException(e);

@@ -92,7 +92,7 @@ public final class LikeDAO implements iLikeDAO {
      */
     @Override
     public Like findLike(int id_publication, String user_name) throws SQLException {
-        PreparedStatement p = this.con.prepareStatement(/*"CALL nexadatabase.`LikeFindLike`(?,?)"*/"Select * from nexadatabase.likes where id_publication in(select id from nexadatabase.publication where id=?) and user_name LIKE(select user_name from nexadatabase.user where user_name like ?) group by id;");
+        PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.`LikeFindLike`(?,?)");
         p.setInt(1, id_publication);
         p.setString(2, user_name);
         ResultSet set = p.executeQuery();

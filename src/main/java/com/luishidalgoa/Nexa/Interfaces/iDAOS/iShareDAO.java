@@ -1,9 +1,13 @@
 package com.luishidalgoa.Nexa.Interfaces.iDAOS;
 
+import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DTO.PublicationDTO;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Share;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 
 public interface iShareDAO {
@@ -33,11 +37,6 @@ public interface iShareDAO {
      */
     public Share findShare(int id_publication,String user_name) throws SQLException;
 
-    /**
-     * El objetivo de este metodo es buscar todos los compartidos por un usuario
-     * @return
-     */
-    public Set<PublicationDTO> findByUser(String username) throws SQLException;
     /**
      * Este metodo devolvera todos los share de una publicacion concreta
      * @param id_publication

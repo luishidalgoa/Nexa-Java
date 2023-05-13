@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -22,6 +23,7 @@ public class Execute extends Application {
     private static Controller mainController;
     private static Stage stage;
     private static UserDTO user_logged;
+    private static Window window;
 
     @Override
     public void start(Stage stage) throws IOException {

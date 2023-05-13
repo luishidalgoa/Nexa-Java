@@ -119,22 +119,6 @@ public final class ShareDAO implements iShareDAO {
         return result;
     }
 
-    @Override
-    public Set<PublicationDTO> findByUser(String username) throws SQLException {
-        PreparedStatement p = this.con.prepareStatement("CALL nexadatabase.ShareFindByUser(?)");
-        p.setString(1,username);
-        ResultSet set= p.executeQuery();
-        Set<PublicationDTO> result = new HashSet<>();
-        while (set.next()){
-            PublicationDTO aux= PublicationDAO.getInstance().findById(set.getInt("id"));
-            result.add(aux);
-        }
-        if(!result.isEmpty()){
-            return result;
-        }
-        return null;
-    }
-
     /**
      * Este metodo devolvera todos los share de una publicacion concreta
      *

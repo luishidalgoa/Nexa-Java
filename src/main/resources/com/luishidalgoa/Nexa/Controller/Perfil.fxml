@@ -66,7 +66,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
+            <HBox layoutX="10.0" layoutY="10.0" onMouseClicked="#Collection" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
                <children>
                   <ImageView fitHeight="24.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -86,7 +86,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox layoutX="10.0" layoutY="60.0" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
+            <HBox layoutX="10.0" layoutY="60.0" onMouseClicked="#Message" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -106,7 +106,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox layoutX="10.0" layoutY="110.0" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
+            <HBox layoutX="10.0" layoutY="110.0" onMouseClicked="#Perfil" prefHeight="50.0" prefWidth="220.0" spacing="5.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -170,7 +170,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                      <children>
-                        <VBox opacity="0.8" prefHeight="157.0" prefWidth="271.0" style="-fx-background-radius: 10; -fx-background-color: white;">
+                        <VBox minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="176.0" prefWidth="271.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                            <children>
                               <HBox prefHeight="50.0" prefWidth="120.0">
                                  <VBox.margin>
@@ -185,12 +185,12 @@
                                           <Image url="@../static/images/users/User.png" />
                                        </image>
                                     </ImageView>
-                                    <Label fx:id="labe_userName" maxWidth="200.0" prefHeight="76.0" text="User Name">
+                                    <Label fx:id="label_userName" maxWidth="200.0" prefHeight="76.0" text="User Name">
                                        <padding>
                                           <Insets left="10.0" />
                                        </padding>
                                     </Label>
-                                    <ImageView fx:id="btn_edit" fitHeight="17.0" fitWidth="20.0">
+                                    <ImageView fx:id="btn_edit" fitHeight="17.0" fitWidth="20.0" onMouseClicked="#updateBiography">
                                        <image>
                                           <Image url="@../static/images/icons/edit.png" />
                                        </image>
@@ -200,8 +200,19 @@
                                     </ImageView>
                                  </children>
                               </HBox>
-                              <TextArea fx:id="textArea_biography" editable="false" prefHeight="149.0" prefWidth="269.0" style="-fx-border-color: none; -fx-border-style: none;" text="Biography" wrapText="true" />
-                              <HBox alignment="TOP_RIGHT" prefHeight="55.0" prefWidth="271.0">
+                              <Label prefHeight="54.0" prefWidth="271.0" text="Biography">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Bell MT" size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="textArea_biography" editable="false" prefHeight="96.0" prefWidth="271.0" style="-fx-border-color: none; -fx-border-style: none;" text="Biography" wrapText="true">
+                                 <font>
+                                    <Font name="Gadugi" size="14.0" />
+                                 </font></TextArea>
+                              <HBox alignment="TOP_RIGHT" prefHeight="18.0" prefWidth="271.0">
                                  <children>
                                     <Label fx:id="label_message_biography" alignment="CENTER_RIGHT" prefHeight="49.0" prefWidth="195.0" textFill="RED">
                                        <padding>

@@ -11,7 +11,9 @@ import com.luishidalgoa.Nexa.Model.Domain.Publications.Like;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Share;
 import com.luishidalgoa.Nexa.Model.Enum.Language;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -19,6 +21,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -50,7 +53,6 @@ public class PublicationController implements Initializable, iPublicationControl
     public void initialize(URL location, ResourceBundle resources) {
         JavaFXStyleDTO.Rounded(perfil, 40);
     }
-
     /**
      * Este metodo se encarga de actualizar todo lo referente a la card
      */
@@ -194,5 +196,20 @@ public class PublicationController implements Initializable, iPublicationControl
 
     public void setLabel_ShareCount(Label label_ShareCount) {
         Label_ShareCount = label_ShareCount;
+    }
+
+    /**
+     * Cambiamosa la pantalla del perfil usuario
+     */
+    public void showPerfil(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/Perfil.fxml"));
+            Parent parent= fxmlLoader.load();
+
+            ((PerfilController)fxmlLoader.getController()).setData(p.getPublication().getUser());//Le seteamos el usuario de la publicacion
+            Execute.setRoot(parent);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

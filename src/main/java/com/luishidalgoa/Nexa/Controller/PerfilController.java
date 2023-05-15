@@ -37,25 +37,28 @@ public class PerfilController extends Controller implements Initializable {
 
     //--------------VISUAL---------
     @FXML
-    private Label Home_Home;
+    private Label Perfil_Home;
     @FXML
-    private Label Home_Collections;
+    private Label Perfil_Collections;
     @FXML
-    private Label Home_Message;
+    private Label Perfil_Message;
     @FXML
-    private Label Home_Perfil;
+    private Label Perfil_Perfil;
     @FXML
     private Button btn_update;
     @FXML
-    private Label Home_Suggestions;
+    private Label Perfil_suggestions;
     @FXML
     private ImageView perfil;
+    @FXML
+    private ImageView btn_edit;
     private final static java.util.logging.Logger logger = com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.PerfilController");
-
+    private UserDTO user;
     @Override
     public void Home() {
         try {
-            Execute.setRoot(Execute.loadFXML("Home"));
+            FXMLLoader fxmlLoader=Execute.loadFXML("Home");
+            Execute.setRoot(fxmlLoader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -73,28 +76,34 @@ public class PerfilController extends Controller implements Initializable {
 
     @Override
     public void Perfil() {
-        updatePublicationPanel();
+        try {
+            FXMLLoader fxmlLoader=Execute.loadFXML("Perfil");
+            Execute.setRoot(fxmlLoader.load());
+            if(fxmlLoader.getController() instanceof PerfilController){
+                ((PerfilController)fxmlLoader.getController()).setData(Execute.getUser_logged());
+            }else{
+                logger.log(Level.WARNING,"WARNING. The controller launch doesn´t a Perfil controller");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Execute.setMainController(this);
-        JavaFXStyleDTO.Rounded(perfil, 40);
-        updatePublicationPanel();
-        UpdateLanguage();
-        suggestion_panel();
     }
 
     public void UpdateLanguage() {
         try {
             //Buscamos el idioma en la configuracion del usuario
-            String language = Objects.requireNonNull(User_optionsDAO.get_instance().FindLanguage(Execute.getUser_logged().getUser_name())).getLanguage().name();
+            String language = Objects.requireNonNull(Objects.requireNonNull(User_optionsDAO.get_instance().FindLanguage(user.getUser_name())).getLanguage().name());
             HashMapSerializable<String, String> translated = Translated.get_instance().getTraslated().map.get(language);
-            Home_Home.setText(translated.map.get("Home_Home")); //buscamos la clave del objeto traducido en el mapa del idioma
-            Home_Collections.setText(translated.map.get("Home_Collections"));
-            Home_Message.setText(translated.map.get("Home_Message"));
-            Home_Perfil.setText(translated.map.get("Home_Perfil"));
-            Home_Suggestions.setText(translated.map.get("Home_Suggestions"));
+            Perfil_Home.setText(translated.map.get("Home_Home")); //buscamos la clave del objeto traducido en el mapa del idioma
+            Perfil_Collections.setText(translated.map.get("Home_Collections"));
+            Perfil_Message.setText(translated.map.get("Home_Message"));
+            Perfil_Perfil.setText(translated.map.get("Home_Perfil"));
+            Perfil_suggestions.setText(translated.map.get("Home_Suggestions"));
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());
             throw new RuntimeException(e);
@@ -102,8 +111,8 @@ public class PerfilController extends Controller implements Initializable {
     }
 
     public void updatePublicationPanel() {
-        label_userName.setText(Execute.getUser_logged().getUser_name());
-        this.textArea_biography.setText(Execute.getUser_logged().getBiography());
+        label_userName.setText(user.getUser_name());
+        this.textArea_biography.setText(user.getBiography());
         if (vBox_publications.getChildren().size() > 1) {
 //limpiaremos toda la vista de una porccion de nuestro vbox_publication. Porque queremos preservar los 2 elementos principales
             vBox_publications.getChildren().subList(1, vBox_publications.getChildren().size()).clear();
@@ -116,7 +125,7 @@ public class PerfilController extends Controller implements Initializable {
                     Node card = fxmlLoader.load();
 
                     PublicationController publicationController = fxmlLoader.getController();
-                    publicationController.setData(Execute.getUser_logged(), aux);
+                    publicationController.setData(user,aux);
                     vBox_publications.getChildren().add(card);
                 } catch (IOException e) {
                     logger.log(Level.SEVERE, e.getMessage());
@@ -187,8 +196,8 @@ public class PerfilController extends Controller implements Initializable {
         String value = textArea_biography.getText();
         try {
             if (textArea_biography.getText().length() > 0 && //Verificamos que las distintas biografias son distintas
-                    !UserDAO.getInstance().searchUser(Execute.getUser_logged().getUser_name()).getBiography().equalsIgnoreCase(value)){
-                if(UserDAO.getInstance().updateBiography(Execute.getUser_logged().getUser_name(), value)){
+                    !UserDAO.getInstance().searchUser(user.getUser_name()).getBiography().equalsIgnoreCase(value)){
+                if(UserDAO.getInstance().updateBiography(user.getUser_name(), value)){
                     label_message_biography.setText(null);
                     btn_update.setVisible(false);
                     textArea_biography.setEditable(false);
@@ -216,7 +225,7 @@ public class PerfilController extends Controller implements Initializable {
      */
     private Set<PublicationDTO> orderByDate() {
         try {
-            Set<PublicationDTO> publications = PublicationDAO.getInstance().findBySocial(Execute.getUser_logged().getUser_name());
+            Set<PublicationDTO> publications = PublicationDAO.getInstance().findBySocial(user.getUser_name());
             publications = Utils.orderByTime(publications);
             return publications;
         } catch (SQLException e) {
@@ -227,5 +236,16 @@ public class PerfilController extends Controller implements Initializable {
 
     public void optionPanel() throws IOException {
         Execute.newStage("optionsPanel");
+    }
+    public void setData(UserDTO user){
+        this.user=user;
+        if(!Execute.getUser_logged().equals(user)){
+            btn_edit.setVisible(false);
+        }
+        Execute.setMainController(this);
+        JavaFXStyleDTO.Rounded(perfil, 40);
+        updatePublicationPanel();
+        UpdateLanguage();
+        suggestion_panel();
     }
 }

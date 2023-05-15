@@ -214,6 +214,12 @@ public class HomeController extends Controller implements Initializable{
 
     @Override
     public void Collection() {
+        try {
+            FXMLLoader fxmlLoader=Execute.loadFXML("Collection/Collection");
+            Execute.setRoot(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         threadUpdatePublications.interrupt();
     }
 
@@ -224,7 +230,13 @@ public class HomeController extends Controller implements Initializable{
 
     public void Perfil(){
         try {
-            Execute.setRoot(Execute.loadFXML("Perfil"));
+            FXMLLoader fxmlLoader=Execute.loadFXML("Perfil");
+            Execute.setRoot(fxmlLoader.load());
+            if(fxmlLoader.getController() instanceof PerfilController){
+                ((PerfilController)fxmlLoader.getController()).setData(Execute.getUser_logged());
+            }else{
+                logger.log(Level.WARNING,"WARNING. The controller launch doesn´t a Perfil controller");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -3,6 +3,8 @@ package com.luishidalgoa.Nexa.Model.DTO;
 import com.luishidalgoa.Nexa.Model.Domain.User.User;
 import com.luishidalgoa.Nexa.Model.Domain.User.User_options;
 
+import java.util.Objects;
+
 public final class UserDTO {
     private String user_name;
     private String biography;
@@ -40,5 +42,18 @@ public final class UserDTO {
 
     public void setUserOptions(User_options userOptions) {
         this.userOptions = userOptions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(user_name, userDTO.user_name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user_name);
     }
 }

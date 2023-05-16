@@ -26,8 +26,20 @@ Para clonar este proyecto, puedes ejecutar el siguiente comando en tu terminal:
 git clone https://github.com/luishidalgoa/Nexa-Java
 ```
 
+### Cargar Base de datos (REQUISITO PRIMORDIAL)
 
-Para instalar la aplicación deberán descargarse el fichero Script.SQL : LINK y ejecutar el fichero de la base de datos.
+__Tu puedes ejecutar una extraccion de la bbdd en un script.sql con el comando__
+
+```
+mysqldump -h localhost -u root -p nexadatabase > ./SQL_file/script.sql
+```
+__o desde la terminal ejecutando el siguiente comando si tienes Node + NPM + Gulp__ 
+
+```
+gulp backup-db
+```
+
+Para instalar la aplicación deberán descargarse el fichero Script.SQL : Link del SQL generado : <a href="https://github.com/luishidalgoa/Nexa-Java/blob/main/SQL_file/script.sql">Link
 
 Además deberán tener algunos requisitos mínimos como la última versión de Java instalado. Para ejecutar la aplicación deberán ejecutar el archivo Nexa.Jar: LINK
 

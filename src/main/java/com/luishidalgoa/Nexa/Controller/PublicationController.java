@@ -2,6 +2,7 @@ package com.luishidalgoa.Nexa.Controller;
 
 import com.luishidalgoa.Nexa.Execute;
 import com.luishidalgoa.Nexa.Interfaces.iControllers.iPublicationController;
+import com.luishidalgoa.Nexa.Model.DAO.Collection.CollectionDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.LikeDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.ShareDAO;
@@ -11,7 +12,9 @@ import com.luishidalgoa.Nexa.Model.Domain.Publications.Like;
 import com.luishidalgoa.Nexa.Model.Domain.Publications.Share;
 import com.luishidalgoa.Nexa.Model.Enum.Language;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -19,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -50,7 +54,6 @@ public class PublicationController implements Initializable, iPublicationControl
     public void initialize(URL location, ResourceBundle resources) {
         JavaFXStyleDTO.Rounded(perfil, 40);
     }
-
     /**
      * Este metodo se encarga de actualizar todo lo referente a la card
      */
@@ -137,6 +140,19 @@ public class PublicationController implements Initializable, iPublicationControl
     }
 
     /**
+     * Este metodo ejecutara un submenu para agregar la publicacion dentro de una lista o eliminarlo de una
+     */
+    public void Collected(){
+        try {
+            FXMLLoader fxmlLoader= Execute.loadFXML("collectionOption");
+            Parent p= fxmlLoader.load();
+            ((CollectionOptionController)fxmlLoader.getController()).setData(this.p.getPublication().getId());
+            Execute.newStage(p);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /**
      * Metodo que habilitara el boton de opciones de la publicaciones en caso de que se valide que la publicacion
      * le pertenece al usuario
      */
@@ -179,20 +195,18 @@ public class PublicationController implements Initializable, iPublicationControl
             throw new RuntimeException(e);
         }
     }
+    /**
+     * Cambiamosa la pantalla del perfil usuario
+     */
+    public void showPerfil(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/Perfil.fxml"));
+            Parent parent= fxmlLoader.load();
 
-    public Label getLabel_LikeCount() {
-        return Label_LikeCount;
-    }
-
-    public void setLabel_LikeCount(Label label_LikeCount) {
-        Label_LikeCount = label_LikeCount;
-    }
-
-    public Label getLabel_ShareCount() {
-        return Label_ShareCount;
-    }
-
-    public void setLabel_ShareCount(Label label_ShareCount) {
-        Label_ShareCount = label_ShareCount;
+            ((PerfilController)fxmlLoader.getController()).setData(p.getPublication().getUser());//Le seteamos el usuario de la publicacion
+            Execute.setRoot(parent);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

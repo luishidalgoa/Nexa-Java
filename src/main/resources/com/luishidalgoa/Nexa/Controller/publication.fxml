@@ -20,7 +20,7 @@
    <children>
       <HBox prefHeight="48.0" prefWidth="270.0" spacing="5.0">
          <children>
-            <Pane prefHeight="48.0" prefWidth="53.0">
+            <Pane onMouseClicked="#showPerfil" prefHeight="48.0" prefWidth="53.0">
                <children>
                   <ImageView fx:id="perfil" fitHeight="41.0" fitWidth="40.0" layoutX="7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -98,7 +98,7 @@
             </HBox>
             <HBox layoutX="124.0" layoutY="10.0" prefHeight="24.0" prefWidth="19.0">
                <children>
-                  <ImageView fitHeight="39.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="39.0" fitWidth="16.0" onMouseClicked="#Collected" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../static/images/icons/bookmark.png" />
                      </image>

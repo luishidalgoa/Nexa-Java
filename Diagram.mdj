@@ -3216,7 +3216,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": 336,
-											"top": -464,
+											"top": -400,
 											"width": 64.32080078125,
 											"height": 13,
 											"text": "«interface»"
@@ -3229,7 +3229,7 @@
 											},
 											"font": "Arial;13;1",
 											"left": 717,
-											"top": 1142,
+											"top": 1174,
 											"width": 61.419921875,
 											"height": 13,
 											"text": "iUserDAO"
@@ -3243,7 +3243,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": 336,
-											"top": -464,
+											"top": -400,
 											"width": 73.67724609375,
 											"height": 13,
 											"text": "(from Model)"
@@ -3257,14 +3257,14 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": 336,
-											"top": -464,
+											"top": -400,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 712,
-									"top": 1135,
+									"top": 1167,
 									"width": 71.419921875,
 									"height": 25,
 									"stereotypeLabel": {
@@ -3292,7 +3292,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 168,
-									"top": -232,
+									"top": -200,
 									"width": 10,
 									"height": 10
 								},
@@ -3308,7 +3308,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 168,
-									"top": -232,
+									"top": -200,
 									"width": 10,
 									"height": 10
 								},
@@ -3324,7 +3324,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 168,
-									"top": -232,
+									"top": -200,
 									"width": 10,
 									"height": 10
 								},
@@ -3340,7 +3340,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 168,
-									"top": -232,
+									"top": -200,
 									"width": 10,
 									"height": 10
 								}
@@ -3348,7 +3348,7 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 712,
-							"top": 1112,
+							"top": 1144,
 							"width": 71.419921875,
 							"height": 49,
 							"stereotypeDisplay": "icon",
@@ -4039,8 +4039,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 773,
-									"top": 1142,
+									"left": 778,
+									"top": 1164,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -4060,8 +4060,8 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 769,
-									"top": 1156,
+									"left": 778,
+									"top": 1179,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -4081,8 +4081,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 782,
-									"top": 1113,
+									"left": 777,
+									"top": 1135,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -4100,7 +4100,7 @@
 								"$ref": "AAAAAAGHqKFnWHugOo4="
 							},
 							"lineStyle": 1,
-							"points": "799:1140;758.7099609375:1128.2044270833333",
+							"points": "799:1157;758.7099609375:1156.6263834635417",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGHvm3BcCs2nvU="
@@ -4985,7 +4985,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -32,
-											"top": -280,
+											"top": -312,
 											"height": 13
 										},
 										{
@@ -4996,7 +4996,7 @@
 											},
 											"font": "Arial;13;1",
 											"left": 805,
-											"top": 1103,
+											"top": 1087,
 											"width": 159.33251953125,
 											"height": 13,
 											"text": "UserDAO"
@@ -5010,7 +5010,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -32,
-											"top": -280,
+											"top": -312,
 											"width": 73.67724609375,
 											"height": 13,
 											"text": "(from DAO)"
@@ -5024,14 +5024,14 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -32,
-											"top": -280,
+											"top": -312,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 800,
-									"top": 1096,
+									"top": 1080,
 									"width": 169.33251953125,
 									"height": 25,
 									"stereotypeLabel": {
@@ -5058,7 +5058,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 800,
-									"top": 1121,
+									"top": 1105,
 									"width": 169.33251953125,
 									"height": 10
 								},
@@ -5083,7 +5083,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 805,
-											"top": 1136,
+											"top": 1120,
 											"width": 159.33251953125,
 											"height": 13,
 											"text": "+findAll(): Set<User>",
@@ -5100,7 +5100,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 805,
-											"top": 1151,
+											"top": 1135,
 											"width": 159.33251953125,
 											"height": 13,
 											"text": "+searchUser(String): User",
@@ -5117,7 +5117,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 805,
-											"top": 1166,
+											"top": 1150,
 											"width": 159.33251953125,
 											"height": 13,
 											"text": "+save(User entity): boolean",
@@ -5134,18 +5134,35 @@
 											},
 											"font": "Arial;13;0",
 											"left": 805,
-											"top": 1181,
+											"top": 1165,
 											"width": 159.33251953125,
 											"height": 13,
 											"text": "+delete(): boolean",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGIFF3se/GqN0A=",
+											"_parent": {
+												"$ref": "AAAAAAGHqKFnWXunfIc="
+											},
+											"model": {
+												"$ref": "AAAAAAGIFF3sXvGef6A="
+											},
+											"font": "Arial;13;0",
+											"left": 805,
+											"top": 1180,
+											"width": 159.33251953125,
+											"height": 13,
+											"text": "+updateBiography()",
 											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 800,
-									"top": 1131,
+									"top": 1115,
 									"width": 169.33251953125,
-									"height": 68
+									"height": 83
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -5159,7 +5176,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -16,
-									"top": -184,
+									"top": -200,
 									"width": 10,
 									"height": 10
 								},
@@ -5175,7 +5192,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -16,
-									"top": -184,
+									"top": -200,
 									"width": 10,
 									"height": 10
 								}
@@ -5186,9 +5203,9 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 800,
-							"top": 1096,
+							"top": 1080,
 							"width": 169.33251953125,
-							"height": 103,
+							"height": 118,
 							"nameCompartment": {
 								"$ref": "AAAAAAGHqKFnWHuh+zw="
 							},
@@ -11713,6 +11730,14 @@
 													"direction": "return"
 												}
 											]
+										},
+										{
+											"_type": "UMLOperation",
+											"_id": "AAAAAAGIFF3sXvGef6A=",
+											"_parent": {
+												"$ref": "AAAAAAGHqKFnWHueMR4="
+											},
+											"name": "updateBiography"
 										}
 									]
 								}

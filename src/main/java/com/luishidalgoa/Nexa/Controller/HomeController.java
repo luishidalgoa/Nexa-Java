@@ -214,6 +214,12 @@ public class HomeController extends Controller implements Initializable{
 
     @Override
     public void Collection() {
+        try {
+            FXMLLoader fxmlLoader=Execute.loadFXML("Collection");
+            Execute.setRoot(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         threadUpdatePublications.interrupt();
     }
 
@@ -224,7 +230,13 @@ public class HomeController extends Controller implements Initializable{
 
     public void Perfil(){
         try {
-            Execute.setRoot(Execute.loadFXML("Perfil"));
+            FXMLLoader fxmlLoader=Execute.loadFXML("Perfil");
+            Execute.setRoot(fxmlLoader.load());
+            if(fxmlLoader.getController() instanceof PerfilController){
+                ((PerfilController)fxmlLoader.getController()).setData(Execute.getUser_logged());
+            }else{
+                logger.log(Level.WARNING,"WARNING. The controller launch doesn´t a Perfil controller");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -252,7 +264,6 @@ public class HomeController extends Controller implements Initializable{
             throw new RuntimeException(e);
         }
     }
-
     /**
      * Metodo ejecutado desde el hilo ThreadUpdate . Mostrara el boton actualizar en la escena
      */
@@ -260,6 +271,7 @@ public class HomeController extends Controller implements Initializable{
         vBox_publications.getChildren().add(0,update);
     }
     public void optionPanel() throws IOException {
-        Execute.newStage("optionsPanel");
+        FXMLLoader fxmlLoader= Execute.loadFXML("optionsPanel");
+        Execute.newStage(fxmlLoader.load());
     }
 }

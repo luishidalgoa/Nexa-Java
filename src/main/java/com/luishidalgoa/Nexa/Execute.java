@@ -30,7 +30,7 @@ public class Execute extends Application {
         Translated.get_instance().setTraslated(XMLManager.readXML(Translated.get_instance().getTraslated(),"Language.xml"));
         this.stage=stage;
         this.stage.getIcons().add(new Image("com/luishidalgoa/Nexa/static/images/Logo.png"));
-        scene = new Scene(loadFXML("Login"), 930, 620);
+        scene = new Scene(loadFXML("Login").load(), 930, 620);
 
         scene.getRoot();
 
@@ -45,19 +45,15 @@ public class Execute extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    public static void newStage(String nameScene) throws IOException {
+    public static void newStage(Parent p) throws IOException {
         Stage stage2=new Stage();
-        Scene scene2= new Scene(loadFXML(nameScene));
-        scene2.setRoot(loadFXML(nameScene));
+        Scene scene2= new Scene(p);
         stage2.setScene(scene2);
         stage2.show();
     }
-    public static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/"+fxml + ".fxml"));
-        Parent parent=fxmlLoader.load();
-        return parent;
+    public static FXMLLoader loadFXML(String fxml) throws IOException {
+        return new FXMLLoader(Execute.class.getResource("Controller/"+fxml + ".fxml"));
     }
-
     public static Controller getMainController() {
         return mainController;
     }

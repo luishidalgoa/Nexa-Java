@@ -15,21 +15,6 @@ public final class Like extends Social {
     public Like() {
     }
 
-    /**
-     * Este metodo agregara un nuevo Like. de modo que en cada publicacion solo pueda haber como mucho 1 like por usuario
-     */
-    @Override
-    public void add() {
-
-    }
-    /**
-     * Este metodo eliminara un Like realizado por un mismo usuario en una misma publicacion.
-     */
-    @Override
-    public void delete() {
-
-    }
-
     @Override
     public String toString() {
         return "Like{" +

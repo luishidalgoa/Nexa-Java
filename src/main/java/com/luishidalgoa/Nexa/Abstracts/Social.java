@@ -23,9 +23,6 @@ public abstract class Social {
         this.publication = publication;
         this.user = user;
     }
-
-    public abstract void add();
-    public abstract void delete();
     public int getId() {
         return id;
     }

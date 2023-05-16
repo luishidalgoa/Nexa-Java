@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="13.0" prefWidth="166.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luishidalgoa.Nexa.Controller.CollectionOptionController">
+    <children>
+        <VBox prefHeight="40.0" prefWidth="166.0" spacing="25.0">
+            <children>
+                <MenuButton fx:id="MenuButton_collections" contentDisplay="RIGHT" mnemonicParsing="false" popupSide="RIGHT" prefHeight="40.0" prefWidth="200.0" text="Collections" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

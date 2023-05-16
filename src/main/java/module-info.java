@@ -14,6 +14,4 @@ module com.luishidalgoa.Nexa {
     opens com.luishidalgoa.Nexa.Model.Connections;
     exports com.luishidalgoa.Nexa.Interfaces.iControllers;
     opens com.luishidalgoa.Nexa.Interfaces.iControllers to javafx.fxml;
-    exports com.luishidalgoa.Nexa.Controller.Collection;
-    opens com.luishidalgoa.Nexa.Controller.Collection to javafx.fxml;
 }

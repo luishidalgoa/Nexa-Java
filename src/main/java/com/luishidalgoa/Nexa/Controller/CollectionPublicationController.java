@@ -1,16 +1,14 @@
-package com.luishidalgoa.Nexa.Controller.Collection;
+package com.luishidalgoa.Nexa.Controller;
 
 import com.luishidalgoa.Nexa.Abstracts.Controller;
-import com.luishidalgoa.Nexa.Controller.PerfilController;
 import com.luishidalgoa.Nexa.Execute;
+import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
-import com.luishidalgoa.Nexa.Model.DTO.HashMapSerializable;
-import com.luishidalgoa.Nexa.Model.DTO.JavaFXStyleDTO;
-import com.luishidalgoa.Nexa.Model.DTO.Translated;
-import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
+import com.luishidalgoa.Nexa.Model.DTO.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -19,9 +17,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -57,6 +53,7 @@ public class CollectionPublicationController extends Controller implements Initi
     @FXML
     private Label label_collectionName;
     private final static java.util.logging.Logger logger = com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.CollectionController");
+    private CollectionDTO collectionDTO;
     @FXML
     @Override
     public void Home() {
@@ -70,7 +67,12 @@ public class CollectionPublicationController extends Controller implements Initi
 
     @Override
     public void Collection() {
-
+        try {
+            FXMLLoader fxmlLoader=Execute.loadFXML("Collection");
+            Execute.setRoot(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -112,17 +114,69 @@ public class CollectionPublicationController extends Controller implements Initi
 
     @Override
     public void updatePublicationPanel() {
+        label_userName.setText(Execute.getUser_logged().getUser_name());
+        if (vBox_publications.getChildren().size() > 1) {
+//limpiaremos toda la vista de una porccion de nuestro vbox_publication. Porque queremos preservar los 2 elementos principales
+            vBox_publications.getChildren().subList(1, vBox_publications.getChildren().size()).clear();
+        }
+        if (!collectionDTO.getCollectionPublication().isEmpty()) {
+            for (PublicationDTO aux : collectionDTO.getCollectionPublication()) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("publication.fxml"));
+                try {
+                    Node card = fxmlLoader.load();
 
+                    PublicationController publicationController = fxmlLoader.getController();
+                    publicationController.setData(Execute.getUser_logged(),aux);
+                    vBox_publications.getChildren().add(card);
+                } catch (IOException e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            logger.log(Level.WARNING, "WARNING. the list Publications of the function: getAllPublications() is empty");
+        }
     }
 
     @Override
     public void suggestion_panel() {
+        Set<UserDTO> users = getRecommendUsers();
+        if (!users.isEmpty()) {
+            for (UserDTO aux : users) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("userPanel.fxml"));
+                try {
+                    Node card = fxmlLoader.load();
 
+                    userPanelController userPanelController = fxmlLoader.getController();
+                    userPanelController.setData(aux);
+                    suggestion_panel.getChildren().add(card);
+                } catch (IOException e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            logger.log(Level.WARNING, "WARNING. the list RecommendUsers of the function: getRecommendUsers() is empty");
+        }
     }
 
     @Override
     public Set<UserDTO> getRecommendUsers() {
-        return null;
+        try {
+            Set<UserDTO> result = new HashSet<>();
+            Set<UserDTO> users = UserDAO.getInstance().findAll();
+            Iterator<UserDTO> it = users.iterator();
+            int i = 0;
+            while (it.hasNext() && i <= 3) {
+                UserDTO aux = it.next();
+                result.add(aux);
+                i++;
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -135,5 +189,10 @@ public class CollectionPublicationController extends Controller implements Initi
     }
     public void optionPanel() throws IOException {
         Execute.newStage("optionsPanel");
+    }
+    public void setData(CollectionDTO c){
+        this.label_collectionName.setText(c.getCollection().getName());
+        this.collectionDTO=c;
+        updatePublicationPanel();
     }
 }

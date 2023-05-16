@@ -50,6 +50,27 @@ public class CollectionDAO {
         }
         return result;
     }
+    public boolean add(String username,String name) throws SQLException {
+        PreparedStatement p = this.con.prepareStatement("call nexadatabase.CollectionAdd(?,?)");
+        p.setString(1,username);
+        p.setString(2,name);
+        p.executeUpdate();
+        if(findByCollection(username,name)!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean delete(String username,String name) throws SQLException {
+        PreparedStatement p = this.con.prepareStatement("call nexadatabase.CollectionDelete(?,?)");
+        p.setString(1, username);
+        p.setString(2,name);
+        p.executeUpdate();
+        if(findByCollection(username,name)!=null){
+            return false;
+        }
+        return true;
+    }
     public static CollectionDAO getInstance() {
         if(_instnace==null){
             _instnace=new CollectionDAO();

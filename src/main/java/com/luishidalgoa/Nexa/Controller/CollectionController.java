@@ -1,9 +1,9 @@
-package com.luishidalgoa.Nexa.Controller.Collection;
+package com.luishidalgoa.Nexa.Controller;
 
 import com.luishidalgoa.Nexa.Abstracts.Controller;
-import com.luishidalgoa.Nexa.Controller.PerfilController;
 import com.luishidalgoa.Nexa.Execute;
 import com.luishidalgoa.Nexa.Model.DAO.Collection.CollectionDAO;
+import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
 import com.luishidalgoa.Nexa.Model.DTO.*;
 import javafx.fxml.FXML;
@@ -11,16 +11,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -36,9 +34,7 @@ public class CollectionController extends Controller implements Initializable {
     @FXML
     private Label label_userName;
     @FXML
-    private Label label_message_biography;
-    @FXML
-    private TextArea textArea_biography;
+    private TextField textField_new;
 
     //--------------VISUAL---------
     @FXML
@@ -67,7 +63,12 @@ public class CollectionController extends Controller implements Initializable {
 
     @Override
     public void Collection() {
-
+        try {
+            FXMLLoader fxmlLoader=Execute.loadFXML("Collection");
+            Execute.setRoot(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -109,9 +110,9 @@ public class CollectionController extends Controller implements Initializable {
 
     @Override
     public void updatePublicationPanel() {
-        if (vBox_publications.getChildren().size() > 1) {
+        if (vBox_publications.getChildren().size() > 2) {
 //limpiaremos toda la vista de una porccion de nuestro vbox_publication. Porque queremos preservar los 2 elementos principales
-            vBox_publications.getChildren().subList(1, vBox_publications.getChildren().size()).clear();
+            vBox_publications.getChildren().subList(2, vBox_publications.getChildren().size()).clear();
         }
         try {
             Set<CollectionDTO> collection=CollectionDAO.getInstance().findByUser(Execute.getUser_logged().getUser_name());
@@ -139,19 +140,69 @@ public class CollectionController extends Controller implements Initializable {
     }
     @Override
     public void suggestion_panel() {
+        Set<UserDTO> users = getRecommendUsers();
+        if (!users.isEmpty()) {
+            for (UserDTO aux : users) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("userPanel.fxml"));
+                try {
+                    Node card = fxmlLoader.load();
 
+                    userPanelController userPanelController = fxmlLoader.getController();
+                    userPanelController.setData(aux);
+                    suggestion_panel.getChildren().add(card);
+                } catch (IOException e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            logger.log(Level.WARNING, "WARNING. the list RecommendUsers of the function: getRecommendUsers() is empty");
+        }
+    }
+
+    /**
+     * Este metodo agregara una coleccion nueva al usuario
+     */
+    public void addCollection(){
+        if(textField_new.getText().length()>0){
+            try {
+                if(!CollectionDAO.getInstance().add(Execute.getUser_logged().getUser_name(), textField_new.getText())){
+                    logger.log(Level.WARNING,"WARNING. Could not add collection");
+                }
+                updatePublicationPanel();
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE,e.getMessage());
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
     public Set<UserDTO> getRecommendUsers() {
-        return null;
+        try {
+            Set<UserDTO> result = new HashSet<>();
+            Set<UserDTO> users = UserDAO.getInstance().findAll();
+            Iterator<UserDTO> it = users.iterator();
+            int i = 0;
+            while (it.hasNext() && i <= 3) {
+                UserDTO aux = it.next();
+                result.add(aux);
+                i++;
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Execute.setMainController(this);
         JavaFXStyleDTO.Rounded(this.perfil,60);
+        this.label_userName.setText(Execute.getUser_logged().getUser_name());
         updatePublicationPanel();
+        suggestion_panel();
     }
     public void optionPanel() throws IOException {
         Execute.newStage("optionsPanel");

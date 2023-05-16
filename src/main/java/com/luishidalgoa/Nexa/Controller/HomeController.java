@@ -215,7 +215,7 @@ public class HomeController extends Controller implements Initializable{
     @Override
     public void Collection() {
         try {
-            FXMLLoader fxmlLoader=Execute.loadFXML("Collection/Collection");
+            FXMLLoader fxmlLoader=Execute.loadFXML("Collection");
             Execute.setRoot(fxmlLoader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -66,7 +66,12 @@ public class PerfilController extends Controller implements Initializable {
 
     @Override
     public void Collection() {
-
+        try {
+            FXMLLoader fxmlLoader=Execute.loadFXML("Collection");
+            Execute.setRoot(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -201,7 +206,7 @@ public class PerfilController extends Controller implements Initializable {
                     label_message_biography.setText(null);
                     btn_update.setVisible(false);
                     textArea_biography.setEditable(false);
-                    updatePublicationPanel();
+                    textArea_biography.setText(UserDAO.getInstance().searchUser(user.getUser_name()).getBiography());
                 }
             }else{
                 label_message_biography.setText("Changes cannot be applied");

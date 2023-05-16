@@ -19,19 +19,19 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="620.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luishidalgoa.Nexa.Controller.Collection.CollectionPublicationController">
+<AnchorPane prefHeight="620.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luishidalgoa.Nexa.Controller.CollectionPublicationController">
     <children>
         <HBox prefHeight="76.0" prefWidth="930.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox alignment="CENTER" prefHeight="53.0" prefWidth="65.0" style="-fx-border-radius: 50; -fx-background-radius: 50;" styleClass="bg-e4e4e4">
                     <stylesheets>
-                        <URL value="@../../static/css/colors.css" />
-                        <URL value="@../../static/css/references.css" />
+                        <URL value="@../static/css/colors.css" />
+                        <URL value="@../static/css/references.css" />
                     </stylesheets>
                     <children>
                         <ImageView fitHeight="59.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../static/images/Logo.png" />
+                                <Image url="@../static/images/Logo.png" />
                             </image>
                         </ImageView>
                     </children>
@@ -54,15 +54,15 @@
                   <String fx:value="rounded-1" />
                </styleClass>
                <stylesheets>
-                  <URL value="@../../static/css/colors.css" />
-                  <URL value="@../../static/css/references.css" />
+                  <URL value="@../static/css/colors.css" />
+                  <URL value="@../static/css/references.css" />
                </stylesheets>
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: white;" styleClass="rounded-1" stylesheets="@../../static/css/references.css" GridPane.columnIndex="2">
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: white;" styleClass="rounded-1" stylesheets="@../static/css/references.css" GridPane.columnIndex="2">
                      <children>
                         <ImageView fx:id="perfil" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../static/images/users/User.png" />
+                              <Image url="@../static/images/users/User.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -70,7 +70,7 @@
                   <Label fx:id="label_userName" prefHeight="18.0" prefWidth="105.0" text="User Name" GridPane.columnIndex="1" />
                   <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../static/images/icons/Config.png" />
+                        <Image url="@../static/images/icons/Config.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="10.0" />
@@ -92,7 +92,7 @@
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../static/images/icons/Home.png" />
+                                <Image url="@../static/images/icons/Home.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="5.0" top="10.0" />
@@ -115,7 +115,7 @@
                     <children>
                         <ImageView fitHeight="24.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../static/images/icons/bookmark.png" />
+                                <Image url="@../static/images/icons/bookmark.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="10.0" top="15.0" />
@@ -135,7 +135,7 @@
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../static/images/icons/Message.png" />
+                                <Image url="@../static/images/icons/Message.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="5.0" top="10.0" />
@@ -155,7 +155,7 @@
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../static/images/icons/Perfil.png" />
+                                <Image url="@../static/images/icons/Perfil.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="5.0" top="10.0" />
@@ -175,7 +175,7 @@
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../static/images/icons/Config.png" />
+                                <Image url="@../static/images/icons/Config.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="5.0" top="10.0" />
@@ -210,7 +210,7 @@
             <children>
                 <ScrollPane prefHeight="523.0" prefWidth="251.0" style="-fx-background-color: none; -fx-background-radius: 10;">
                     <content>
-                        <VBox fx:id="vBox_publications" prefHeight="521.0" prefWidth="278.0" spacing="10.0" style="-fx-background-radius: 10;" styleClass="bg-e4e4e4" stylesheets="@../../static/css/colors.css">
+                        <VBox fx:id="vBox_publications" prefHeight="521.0" prefWidth="278.0" spacing="10.0" style="-fx-background-radius: 10;" styleClass="bg-e4e4e4" stylesheets="@../static/css/colors.css">
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
@@ -220,7 +220,7 @@
                               <Font name="System Bold Italic" size="21.0" />
                            </font>
                         </Label>
-                                <fx:include source="../publication.fxml" />
+                                <fx:include source="publication.fxml" />
                             </children></VBox>
                     </content>
                 </ScrollPane>
@@ -255,7 +255,7 @@
         </VBox>
     </children>
     <stylesheets>
-        <URL value="@../../static/css/colors.css" />
-        <URL value="@../../static/css/references.css" />
+        <URL value="@../static/css/colors.css" />
+        <URL value="@../static/css/references.css" />
     </stylesheets>
 </AnchorPane>

@@ -240,7 +240,8 @@ public class PerfilController extends Controller implements Initializable {
     }
 
     public void optionPanel() throws IOException {
-        Execute.newStage("optionsPanel");
+        FXMLLoader fxmlLoader= Execute.loadFXML("optionsPanel");
+        Execute.newStage(fxmlLoader.load());
     }
     public void setData(UserDTO user){
         this.user=user;

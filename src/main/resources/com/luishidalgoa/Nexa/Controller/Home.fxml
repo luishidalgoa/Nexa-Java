@@ -61,7 +61,7 @@
                   <URL value="@../static/css/references.css" />
                </stylesheets>
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: white;" styleClass="rounded-1" stylesheets="@../static/css/references.css" GridPane.columnIndex="2">
+                  <HBox onMouseClicked="#Perfil" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: white;" styleClass="rounded-1" stylesheets="@../static/css/references.css" GridPane.columnIndex="2">
                      <children>
                         <ImageView fx:id="perfil1" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -70,7 +70,7 @@
                         </ImageView>
                      </children></HBox>
                   <Label fx:id="label_userName" prefHeight="18.0" prefWidth="105.0" text="User Name" GridPane.columnIndex="1" />
-                  <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="24.0" fitWidth="22.0" onMouseClicked="#optionPanel" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../static/images/icons/Config.png" />
                      </image>

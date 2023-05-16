@@ -264,7 +264,6 @@ public class HomeController extends Controller implements Initializable{
             throw new RuntimeException(e);
         }
     }
-
     /**
      * Metodo ejecutado desde el hilo ThreadUpdate . Mostrara el boton actualizar en la escena
      */
@@ -272,6 +271,7 @@ public class HomeController extends Controller implements Initializable{
         vBox_publications.getChildren().add(0,update);
     }
     public void optionPanel() throws IOException {
-        Execute.newStage("optionsPanel");
+        FXMLLoader fxmlLoader= Execute.loadFXML("optionsPanel");
+        Execute.newStage(fxmlLoader.load());
     }
 }

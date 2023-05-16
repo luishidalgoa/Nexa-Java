@@ -45,17 +45,15 @@ public class Execute extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    public static void newStage(String nameScene) throws IOException {
+    public static void newStage(Parent p) throws IOException {
         Stage stage2=new Stage();
-        FXMLLoader fxmlLoader= loadFXML(nameScene);
-        Scene scene2= new Scene(fxmlLoader.load());
+        Scene scene2= new Scene(p);
         stage2.setScene(scene2);
         stage2.show();
     }
     public static FXMLLoader loadFXML(String fxml) throws IOException {
         return new FXMLLoader(Execute.class.getResource("Controller/"+fxml + ".fxml"));
     }
-
     public static Controller getMainController() {
         return mainController;
     }

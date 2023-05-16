@@ -52,7 +52,7 @@ public class CollectionPublicationController extends Controller implements Initi
     private ImageView perfil;
     @FXML
     private Label label_collectionName;
-    private final static java.util.logging.Logger logger = com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.CollectionController");
+    private final static java.util.logging.Logger logger = com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.CollectionPublicationController");
     private CollectionDTO collectionDTO;
     @FXML
     @Override
@@ -188,11 +188,13 @@ public class CollectionPublicationController extends Controller implements Initi
     public CollectionPublicationController() {
     }
     public void optionPanel() throws IOException {
-        Execute.newStage("optionsPanel");
+        FXMLLoader fxmlLoader= Execute.loadFXML("optionsPanel");
+        Execute.newStage(fxmlLoader.load());
     }
     public void setData(CollectionDTO c){
         this.label_collectionName.setText(c.getCollection().getName());
         this.collectionDTO=c;
         updatePublicationPanel();
+        suggestion_panel();
     }
 }

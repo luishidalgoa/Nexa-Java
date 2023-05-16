@@ -205,7 +205,8 @@ public class CollectionController extends Controller implements Initializable {
         suggestion_panel();
     }
     public void optionPanel() throws IOException {
-        Execute.newStage("optionsPanel");
+        FXMLLoader fxmlLoader= Execute.loadFXML("optionsPanel");
+        Execute.newStage(fxmlLoader.load());
     }
 }
 

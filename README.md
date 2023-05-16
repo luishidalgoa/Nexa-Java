@@ -1,4 +1,4 @@
-# Nexa: una red social hecha con Java
+# Nexa: ¡ Conecta !
 
 <p align="center">
   <img src="https://github.com/luishidalgoa/Nexa-Java/blob/main/src/main/resources/Logo.png" alt="Logo">

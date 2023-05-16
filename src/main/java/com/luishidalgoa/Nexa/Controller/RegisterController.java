@@ -2,7 +2,7 @@ package com.luishidalgoa.Nexa.Controller;
 
 import com.luishidalgoa.Nexa.Execute;
 import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
-import com.luishidalgoa.Nexa.Model.DTO.UserDTO;
+import com.luishidalgoa.Nexa.Model.Domain.User.User;
 import com.luishidalgoa.Nexa.Utils.Login;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class RegisterController implements Initializable {
     @FXML
     private TextField TextField_user_name;
     @FXML
@@ -31,13 +31,13 @@ public class LoginController implements Initializable {
         TextField_user_name.textProperty().addListener(observable -> { //Realmente esto no deberia implementarse por privacidad
             try {
                 if(UserDAO.getInstance().searchUser(TextField_user_name.getText())==null){
-                    Label_warningUser.setStyle("-fx-text-fill: red");
-                    Label_warningUser.setText("This user not found");
-                    PasswordField_Password.setDisable(true);
-                }else{
                     Label_warningUser.setStyle("-fx-text-fill: green");
-                    Label_warningUser.setText("Already exist");
+                    Label_warningUser.setText("This user not exist");
                     PasswordField_Password.setDisable(false);
+                }else{
+                    Label_warningUser.setStyle("-fx-text-fill: red");
+                    Label_warningUser.setText("Already exist");
+                    PasswordField_Password.setDisable(true);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -45,26 +45,17 @@ public class LoginController implements Initializable {
         });
 
     }
-    public void Register(){
-        try {
-            FXMLLoader fxmlLoader= Execute.loadFXML("Register");
-            Execute.setRoot(fxmlLoader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public void login() throws IOException {
         if(TextField_user_name.getText()!=null && PasswordField_Password!=null){
-            UserDTO user= Login.Sing_in(TextField_user_name.getText(),PasswordField_Password.getText());
-            if(user==null){
-                Label_login_error.setText("the username or password are incorrect");
-            }else{
-                Execute.setUser_logged(user);
-                FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/Home.fxml"));
-                Parent parent=fxmlLoader.load();
-
-                Execute.setRoot(parent);
+            try {
+                if(UserDAO.getInstance().save(new User(TextField_user_name.getText(), Login.encrypt(PasswordField_Password.getText()),""))){
+                    FXMLLoader fxmlLoader = new FXMLLoader(Execute.class.getResource("Controller/Login.fxml"));
+                    Parent parent=fxmlLoader.load();
+                    Execute.setRoot(parent);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }else{
             Label_login_error.setText("you should fill out the fields");

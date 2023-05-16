@@ -1,5 +1,9 @@
 # Nexa: una red social hecha con Java
 
+<p align="center">
+  <img src="https://github.com/luishidalgoa/Nexa-Java/blob/main/src/main/resources/Logo.png" alt="Logo">
+</p>
+
 Nexa es un proyecto de programación realizado 100% con Java. Es una red social que permite a los usuarios crear y compartir publicaciones, visitar perfiles, dar likes, configurar el idioma y tener colecciones de publicaciones favoritas.
 
 ## Características principales
@@ -13,6 +17,15 @@ Nexa es un proyecto de programación realizado 100% con Java. Es una red social 
 - Los usuarios pueden tener colecciones de publicaciones. En ellas pueden almacenar sus publicaciones favoritas en sus distintas colecciones
 
 ## Pautas para la instalación
+### Clonar el proyecto
+
+Para clonar este proyecto, puedes ejecutar el siguiente comando en tu terminal:
+
+
+```
+git clone https://github.com/luishidalgoa/Nexa-Java
+```
+
 
 Para instalar la aplicación deberán descargarse el fichero Script.SQL : LINK y ejecutar el fichero de la base de datos.
 
@@ -20,4 +33,4 @@ Además deberán tener algunos requisitos mínimos como la última versión de J
 
 ## Video explicativo sobre Nexa
 
-Para ver un video explicativo sobre el funcionamiento y las funcionalidades de Nexa, pueden acceder al siguiente enlace: Link
+Para ver un video explicativo sobre el funcionamiento y las funcionalidades de Nexa, pueden acceder al siguiente enlace: 

@@ -123,7 +123,7 @@ public class PerfilController extends Controller implements Initializable {
             vBox_publications.getChildren().subList(1, vBox_publications.getChildren().size()).clear();
         }
         Set<PublicationDTO> publications = orderByDate();
-        if (!publications.isEmpty()) {
+        if (publications!=null && !publications.isEmpty()) {
             for (PublicationDTO aux : publications) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("publication.fxml"));
                 try {
@@ -207,6 +207,7 @@ public class PerfilController extends Controller implements Initializable {
                     btn_update.setVisible(false);
                     textArea_biography.setEditable(false);
                     textArea_biography.setText(UserDAO.getInstance().searchUser(user.getUser_name()).getBiography());
+                    Execute.setUser_logged(UserDAO.getInstance().searchUser(Execute.getUser_logged().getUser_name()));
                 }
             }else{
                 label_message_biography.setText("Changes cannot be applied");

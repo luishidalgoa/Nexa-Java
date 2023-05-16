@@ -1,6 +1,7 @@
 package com.luishidalgoa.Nexa.Model.DTO;
 
 import com.luishidalgoa.Nexa.Model.DAO.Collection.CollectionDAO;
+import com.luishidalgoa.Nexa.Model.DAO.Collection.Publication_CollectionDAO;
 import com.luishidalgoa.Nexa.Model.Domain.Collections.Collection;
 
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class CollectionDTO {
     public CollectionDTO(Collection collection) {
         this.collection = collection;
         try {
-            this.collectionPublication= CollectionDAO.getInstance().findByCollection(collection.getName(),collection.getUser_name());
+            this.collectionPublication= Publication_CollectionDAO.getInstance().findByCollection(collection.getName(),collection.getUser_name());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

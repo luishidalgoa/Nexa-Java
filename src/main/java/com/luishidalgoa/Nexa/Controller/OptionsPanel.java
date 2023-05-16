@@ -52,8 +52,13 @@ public class OptionsPanel implements Initializable, iOptionsPanel {
         }
     }
 
+    /**
+     * Ejecutara el metodo logout de la clase abstracta Controller. Este otro metodo cerrara sesion automaticamente
+     */
+    public void logOut(){
+        Execute.getMainController().logOut();
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("CHECK Option panel");
     }
 }

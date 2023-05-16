@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CollectionDAO {
@@ -21,22 +22,15 @@ public class CollectionDAO {
     private CollectionDAO() {
         this.con = ConnectionMySQL.getConnect();
     }
-    public Set<PublicationDTO>findByCollection(String user_name,String name) throws SQLException {
-        PreparedStatement p = this.con.prepareStatement("call nexadatabase.CollectionFindPublications(?,?)");
-        p.setString(1,user_name);
-        p.setString(2,name);
-        ResultSet set= p.executeQuery();
-        Set<PublicationDTO>result=new HashSet<>();
-        while (set.next()){
-            PublicationDTO aux= PublicationDAO.getInstance().findById(set.getInt("id_publication"));
-            if(aux!=null){
-                result.add(aux);
-            }else{
-                return null; //Forzamos que si ocurre algun problema se devuelva null
-            }
-        }
-        return result;
-    }
+
+
+
+    /**
+     * Buscara todas las colecciones que posee el usuario solicitado
+     * @param username nombre usuario poseedor de las colecciones
+     * @return dd
+     * @throws SQLException dd
+     */
     public Set<CollectionDTO> findByUser(String username) throws SQLException {
         PreparedStatement p= this.con.prepareStatement("call nexadatabase.CollectionFindByUser(?)");
         p.setString(1,username);
@@ -45,28 +39,46 @@ public class CollectionDAO {
         while (set.next()){
             CollectionDTO aux= new CollectionDTO();
             aux.setCollection(new Collection(set.getString("name"),username));
-            aux.setCollectionPublication(findByCollection(username,set.getString("name")));
+            aux.setCollectionPublication(Publication_CollectionDAO.getInstance().findByCollection(username,set.getString("name")));
             result.add(aux);
         }
         return result;
     }
+
+    /**
+     * Guardara una nueva coleccion para el usuario 'X'
+     * @param username usuario al cual se le agregara la coleccion
+     * @param name nombre de la coleccion
+     * @return dd
+     * @throws SQLException dd
+     */
     public boolean add(String username,String name) throws SQLException {
         PreparedStatement p = this.con.prepareStatement("call nexadatabase.CollectionAdd(?,?)");
         p.setString(1,username);
         p.setString(2,name);
         p.executeUpdate();
-        if(findByCollection(username,name)!=null){
+        if(Publication_CollectionDAO.getInstance().findByCollection(username,name)!=null){
             return true;
         }else{
+            logger.log(Level.WARNING,"Could not save collection");
             return false;
         }
     }
+
+    /**
+     * Este metodo eliminara un coleccion poseida por el usuario 'X'
+     * @param username usuario dueño de la coleccion
+     * @param name nombre de la coleccion
+     * @return true o false dependiendo de haber sido satisfactorio la operacion
+     * @throws SQLException dd
+     */
     public boolean delete(String username,String name) throws SQLException {
         PreparedStatement p = this.con.prepareStatement("call nexadatabase.CollectionDelete(?,?)");
         p.setString(1, username);
         p.setString(2,name);
         p.executeUpdate();
-        if(findByCollection(username,name)!=null){
+        if(Publication_CollectionDAO.getInstance().findByCollection(username,name)!=null){
+            logger.log(Level.WARNING,"Could not delete collection");
             return false;
         }
         return true;

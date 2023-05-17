@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<conexion>
-    <server>jdbc:mysql://localhost:3306</server>
-    <database>nexadatabase</database>
-    <username>root</username>
-    <password>1234</password>
-</conexion>

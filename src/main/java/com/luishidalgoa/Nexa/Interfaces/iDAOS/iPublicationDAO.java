@@ -27,14 +27,14 @@ public interface iPublicationDAO {
     public PublicationDTO findById(int id_publication) throws SQLException;
     /**
      * El objetivo de este metodo es buscar todos los compartidos por un usuario
-     * @return
+     * @return dd
      */
     public Set<PublicationDTO> findBySocial(String username) throws SQLException;
 
     /**
      * Este metodo eliminara un publicacion
-     * @param id
-     * @return
+     * @param id dd
+     * @return dd
      */
     public boolean delete(int id) throws SQLException;
     public boolean update(PublicationDTO p,String text) throws SQLException;

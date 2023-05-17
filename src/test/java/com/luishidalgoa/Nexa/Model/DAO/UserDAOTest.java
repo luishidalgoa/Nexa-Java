@@ -5,6 +5,7 @@ import com.luishidalgoa.Nexa.Model.Domain.User.User;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,8 @@ class UserDAOTest {
     @Test
     void findAll() {
         try {
-            System.out.println(userDAO.findAll().size());
+            Set<UserDTO> aux=UserDAO.getInstance().findAll();
+            assertTrue(aux.size() > 1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

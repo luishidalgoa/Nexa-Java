@@ -1,2 +1,0 @@
-May 17, 2023 8:31:45 AM com.luishidalgoa.Nexa.Model.DAO.Collection.Publication_CollectionDAO searchByPublication
-WARNING: The publication with id: 137 was not found in the collection A of the user Luis

@@ -1,6 +1,0 @@
-May 17, 2023 8:30:31 AM com.luishidalgoa.Nexa.Thread.ThreadUpdatePublications run
-SEVERE: ERROR. The thread has been interrumped sleep interrupted
-May 17, 2023 8:31:38 AM com.luishidalgoa.Nexa.Thread.ThreadUpdatePublications run
-SEVERE: ERROR. The thread has been interrumped sleep interrupted
-May 17, 2023 8:31:47 AM com.luishidalgoa.Nexa.Thread.ThreadUpdatePublications run
-SEVERE: ERROR. The thread has been interrumped sleep interrupted

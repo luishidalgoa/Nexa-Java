@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hashMapSerializable>
+    <map>
+        <entry>
+            <key xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">EN</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="hashMapSerializable">
+                <map>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Home</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Perfil</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Perfil</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_textField_post</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Make your post here...</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Post</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Post</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Collections</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Collections</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_ShowMore</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Show more...</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Suggestions</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Suggestions</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Publication_Update</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Update</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Publication_Menu_options</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Options</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Message</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Message</value>
+                    </entry>
+                </map>
+            </value>
+        </entry>
+        <entry>
+            <key xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">ES</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="hashMapSerializable">
+                <map>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Home</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Inicio</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Perfil</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Mi perfil</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_textField_post</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Escribe tu publicacion aqui...</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Post</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Enviar</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Collections</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Marcadores</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_ShowMore</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Mostrar recientes...</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Suggestions</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Recomendados</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Publication_Update</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Actualizar</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Publication_Menu_options</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Opciones</value>
+                    </entry>
+                    <entry>
+                        <key xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Home_Message</key>
+                        <value xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Mensajes</value>
+                    </entry>
+                </map>
+            </value>
+        </entry>
+    </map>
+</hashMapSerializable>

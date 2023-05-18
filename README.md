@@ -9,7 +9,7 @@ Nexa es un proyecto de programación realizado 100% con Java. Es una red social 
 ## Características principales
 
 - Permite crear e iniciar sesión con usuarios
-- Los usuarios pueden realizar publicaciones con texto e imágenes
+- Los usuarios pueden realizar publicaciones con texto 
 - Los usuarios pueden visitar perfiles de otros usuarios incluido el suyo propio
 - Los usuarios pueden configurar el idioma de la aplicación entre español e inglés
 - Los usuarios pueden dar likes a las publicaciones que les gusten

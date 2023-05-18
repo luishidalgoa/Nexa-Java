@@ -100,11 +100,11 @@ Además deberán tener algunos requisitos mínimos como la última versión de J
   Deberan tener la ultima version del JDK como se menciono en el __#Requisitos minimos__. Este JDK debera estar en la ruta 
   "C:\Program Files\Java\"
   
-  ```
+### ¡IMPORTANTE! ejecutar el siguiente comando 
+  
+   ```
   java --module-path "C:\Program Files\Java\javafx-sdk-20.0.1\lib" --add-modules javafx.controls,javafx.fxml -jar Nexa-Java.jar
   ```
-  
-### ¡IMPORTANTE! ejecutar el siguiente comando 
   
 ## Video explicativo sobre Nexa
 

@@ -28,11 +28,17 @@ Nexa es un proyecto de programación realizado 100% con Java. Es una red social 
   <img src="https://github.com/luishidalgoa/Nexa-Java/blob/main/src/main/resources/BBDD.jpg" alt="Logo">
 </p>
 
+## Diagrama caso de uso
+
+<p align="center">
+  <img src="https://github.com/luishidalgoa/Nexa-Java/blob/main/Caso%20de%20uso.jpg" alt="Logo">
+</p>
+
 ## Requisitos cumplidos:
 Se	debe	realizar	un	diseño	de	la	solución,	documentando	esta	fase	en	al	menos:
 - Modelo	E-R ✅
 - Diagrama	de	clases ✅
-- Diseño	de	pantallas/casos	de	uso 🟧
+- Diseño	de	pantallas/casos	de	uso ✅
 En	el	diseño	de	la	base	de	datos	se	solicita	como	requisito	mínimo:
 - Al	menos	una	relación	1:N /	N:M,	con	un	mínimo	de	tres	tablas	relacionadas. ✅
 - Implementación	en	MySQL ✅

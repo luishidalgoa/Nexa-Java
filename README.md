@@ -94,7 +94,7 @@ gulp backup-db
 
 Para instalar la aplicación deberán descargarse el fichero Script.SQL : Link del SQL generado : <a href="https://github.com/luishidalgoa/Nexa-Java/blob/main/SQL_file/script.sql">Link
 
-Además deberán tener algunos requisitos mínimos como la última versión de Java instalado. Para ejecutar la aplicación deberán ejecutar el archivo Nexa.Jar: Link
+Además deberán tener algunos requisitos mínimos como la última versión de Java instalado. Para ejecutar la aplicación deberán ejecutar el archivo Nexa.Jar: <a href="https://github.com/luishidalgoa/Nexa-Java/blob/main/Nexa-Java.jar">Link
    
   ### Como ejecutar el .JAR 
   Deberan tener la ultima version del JDK como se menciono en el __#Requisitos minimos__. Este JDK debera estar en la ruta 

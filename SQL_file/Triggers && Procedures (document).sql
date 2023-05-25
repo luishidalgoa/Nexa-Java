@@ -4,7 +4,7 @@ CREATE TRIGGER create_User_options
     AFTER INSERT ON nexadatabase.user
     FOR EACH ROW
 BEGIN
-    INSERT INTO nexadatabase.user_options (user_name)
+    INSERT INTO user_options (user_name)
     VALUES (NEW.user_name);
 END;
 
@@ -55,6 +55,24 @@ BEGIN
     DELETE FROM nexadatabase.publications_collection
     where publications_collection.user_name LIKE OLD.user_name and publications_collection.name LIKE OLD.name;
 END;
+
+CREATE TRIGGER delete_publication_collection
+    BEFORE DELETE ON nexadatabase.publication
+    FOR EACH ROW
+BEGIN
+    DELETE FROM nexadatabase.publications_collection
+    where publications_collection.id_publication=OLD.id and publications_collection.user_name=OLD.user_name;
+END;
+
+
+CREATE TRIGGER delete_likes
+    BEFORE DELETE ON nexadatabase.user
+    FOR EACH ROW
+BEGIN
+    DELETE FROM nexadatabase.likes
+    where likes.user_name=OLD.user_name;
+END;
+
 #--------------------PROCEDURES----------------------
     #--------------PublicationDAO----------------
     DELIMITER //

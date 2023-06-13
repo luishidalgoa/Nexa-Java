@@ -16,7 +16,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="620.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luishidalgoa.Nexa.Controller.PerfilController">
+<AnchorPane fx:id="root" prefHeight="620.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luishidalgoa.Nexa.Controller.PerfilController">
    <children>
       <HBox prefHeight="76.0" prefWidth="930.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -172,7 +172,7 @@
                      <children>
                         <VBox minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="176.0" prefWidth="271.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                            <children>
-                              <HBox prefHeight="50.0" prefWidth="120.0">
+                              <HBox prefHeight="69.0" prefWidth="272.0">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -185,7 +185,7 @@
                                           <Image url="@../static/images/users/User.png" />
                                        </image>
                                     </ImageView>
-                                    <Label fx:id="label_userName" maxWidth="200.0" prefHeight="76.0" text="User Name">
+                                    <Label fx:id="label_userName" maxWidth="200.0" prefHeight="31.0" prefWidth="69.0" text="User Name">
                                        <padding>
                                           <Insets left="10.0" />
                                        </padding>
@@ -198,6 +198,28 @@
                                           <Insets left="10.0" top="8.0" />
                                        </HBox.margin>
                                     </ImageView>
+                                    <VBox prefHeight="32.0" prefWidth="131.0">
+                                       <children>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="label_follow" alignment="CENTER" onMouseClicked="#showFollowPannel" prefHeight="17.0" prefWidth="67.0" text="0" />
+                                                <Label fx:id="label_followed" alignment="CENTER" onMouseClicked="#showFollowedPannel" prefHeight="17.0" prefWidth="67.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Button fx:id="btn_follow" mnemonicParsing="false" onAction="#follow" prefHeight="25.0" prefWidth="67.0" style="-fx-background-radius: 20; -fx-background-color: cbaad5;" text="Follow" textAlignment="CENTER" textFill="WHITE">
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </HBox>
                               <Label prefHeight="54.0" prefWidth="271.0" text="Biography">
@@ -208,13 +230,13 @@
                                     <Font name="Bell MT" size="16.0" />
                                  </font>
                               </Label>
-                              <TextArea fx:id="textArea_biography" editable="false" prefHeight="96.0" prefWidth="271.0" style="-fx-border-color: none; -fx-border-style: none;" text="Biography" wrapText="true">
+                              <TextArea fx:id="textArea_biography" editable="false" prefHeight="96.0" prefWidth="272.0" style="-fx-border-color: none; -fx-border-style: none;" text="Biography" wrapText="true">
                                  <font>
                                     <Font name="Gadugi" size="14.0" />
                                  </font></TextArea>
-                              <HBox alignment="TOP_RIGHT" prefHeight="18.0" prefWidth="271.0">
+                              <HBox alignment="TOP_RIGHT" prefHeight="6.0" prefWidth="272.0">
                                  <children>
-                                    <Label fx:id="label_message_biography" alignment="CENTER_RIGHT" prefHeight="49.0" prefWidth="195.0" textFill="RED">
+                                    <Label fx:id="label_message_biography" alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="195.0" textFill="RED">
                                        <padding>
                                           <Insets right="10.0" />
                                        </padding>

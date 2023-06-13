@@ -51,7 +51,7 @@ public class UserDAO implements iUserDAO{
      * @param aux Objeto del cual crearemos el DAO
      * @return dd
      */
-    private UserDTO buildDTO(User aux){
+    public UserDTO buildDTO(User aux){
         UserDTO result=new UserDTO();
         if(aux!=null){
             result.setUser_name(aux.getUser_name());

@@ -2,6 +2,7 @@ package com.luishidalgoa.Nexa.Controller;
 
 import com.luishidalgoa.Nexa.Abstracts.Controller;
 import com.luishidalgoa.Nexa.Execute;
+import com.luishidalgoa.Nexa.Model.DAO.FollowDAO;
 import com.luishidalgoa.Nexa.Model.DAO.Publications.PublicationDAO;
 import com.luishidalgoa.Nexa.Model.DAO.UserDAO;
 import com.luishidalgoa.Nexa.Model.DAO.User_optionsDAO;
@@ -11,10 +12,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -45,13 +48,22 @@ public class PerfilController extends Controller implements Initializable {
     @FXML
     private Label Perfil_Perfil;
     @FXML
+    private Label label_follow;
+    @FXML
+    private Label label_followed;
+
+    @FXML
     private Button btn_update;
+    @FXML
+    private Button btn_follow;
     @FXML
     private Label Perfil_suggestions;
     @FXML
     private ImageView perfil;
     @FXML
     private ImageView btn_edit;
+    @FXML
+    private AnchorPane root;
     private final static java.util.logging.Logger logger = com.luishidalgoa.Nexa.Utils.Logger.CreateLogger("com.luisidalgoa.com.Controller.PerfilController");
     private UserDTO user;
     @Override
@@ -118,6 +130,7 @@ public class PerfilController extends Controller implements Initializable {
     public void updatePublicationPanel() {
         label_userName.setText(user.getUser_name());
         this.textArea_biography.setText(user.getBiography());
+        updateFollow();
         if (vBox_publications.getChildren().size() > 1) {
 //limpiaremos toda la vista de una porccion de nuestro vbox_publication. Porque queremos preservar los 2 elementos principales
             vBox_publications.getChildren().subList(1, vBox_publications.getChildren().size()).clear();
@@ -142,6 +155,31 @@ public class PerfilController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Este método cargará todos los seguidores y seguidos de un usuario
+     */
+    public void updateFollow(){
+        HashSet<UserDTO> follow=user.getFollow();
+        HashSet<UserDTO> followed= user.getFollowed();
+        if(follow !=null){
+            label_follow.setText(String.valueOf(follow.size()));
+        }
+        if(followed!=null){
+            label_followed.setText(String.valueOf(followed.size()));
+        }
+    }
+    public void follow(){
+        try {
+            if(!FollowDAO.get_instance().searchFollow(Execute.getUser_logged().getUser_name(),user.getUser_name())){
+                FollowDAO.get_instance().follow(Execute.getUser_logged().getUser_name(),user.getUser_name());
+            }else{
+                FollowDAO.get_instance().unFollow(Execute.getUser_logged().getUser_name(),user.getUser_name());
+            }
+            updateFollow();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Este metodo en primera instancia buscara una coleccion de usuarios para posteriormente iterar la coleccion e
      * inicializar una vista de la misma incluido su controller. Posteriormente insertaremos el nodo dentro del container
@@ -249,10 +287,42 @@ public class PerfilController extends Controller implements Initializable {
         if(!Execute.getUser_logged().equals(user)){
             btn_edit.setVisible(false);
         }
+        if(Execute.getUser_logged().equals(user)){
+            btn_follow.setVisible(false);
+        }
         Execute.setMainController(this);
         JavaFXStyleDTO.Rounded(perfil, 40);
         updatePublicationPanel();
         UpdateLanguage();
         suggestion_panel();
+    }
+    /**
+     * Cambiamosa la pantalla del perfil usuario
+     */
+    public void showFollowPannel(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FollowPanel.fxml"));
+        try {
+            Node card = fxmlLoader.load();
+
+            FollowPanelController followPanelController = fxmlLoader.getController();
+            followPanelController.setData(user.getFollow());
+            root.getChildren().add(card);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE,e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    public void showFollowedPannel(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FollowPanel.fxml"));
+        try {
+            Node card = fxmlLoader.load();
+
+            FollowPanelController followPanelController = fxmlLoader.getController();
+            followPanelController.setData(user.getFollowed());
+            root.getChildren().add(card);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE,e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -52,10 +52,9 @@ public class Utils {
      */
     public static Set<PublicationDTO> orderByTime(Set<PublicationDTO> publications) {
         if(publications!=null){
-            Set<PublicationDTO> sortedPublications = publications.stream()
+            return publications.stream()
                     .sorted(Comparator.comparing(p -> p.getPublication().getPublication_date(), Comparator.reverseOrder()))
                     .collect(Collectors.toCollection(LinkedHashSet::new));
-            return sortedPublications;
         }
         return null;
     }
